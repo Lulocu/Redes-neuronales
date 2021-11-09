@@ -10,25 +10,25 @@ import IPython
 import IPython.display
 
 
-
-
 path = '/home/luis/Documentos/pruebaRedes/datasetsMini/'
-file_dataset = '2015Flow.csv'
-#file_test = '2016Prueba.csv'
+file_dataset = '2015.csv'
+file_test = '2016Prueba.csv'
 #file_validate = '2016Prueba.csv'
 filename_dataset = os.path.join(path,file_dataset)
+filename_test = os.path.join(path,file_test)
 
 data_file = pd.read_csv(filename_dataset)
-
+test_file = pd.read_csv(filename_test)
 
 column_indices = {name: i for i, name in enumerate(data_file.columns)}
-
+column_indices_test = {name: i for i, name in enumerate(test_file.columns)}
 n = len(data_file)
-train_df = data_file[0:int(n*0.7)]
-val_df = data_file[int(n*0.7):int(n*0.9)]
-test_df = data_file[int(n*0.9):]
+nt = len(test_file)
+train_df = data_file
+val_df = test_file[:int(nt*0.7)]
+test_df = test_file[int(nt*0.7):]
 
-num_features = data_file.shape[1]
+#num_features = data_file.shape[1:]
 
 
 #Normalización
@@ -39,85 +39,16 @@ val_df = (val_df - train_mean) / train_std
 test_df = (test_df - train_mean) / train_std
 
 
-w2 = model.WindowGenerator(input_width=6, label_width=1, shift=1,train_df=train_df, val_df=val_df, test_df=test_df,
-                     label_columns=['flow'])
-
-
-
-model.WindowGenerator.split_window = model.split_window
-
-
+#Añades al modelo los datasets necesarios
 model.WindowGenerator.plot = utils.plot
-
-
-
 model.WindowGenerator.make_dataset = utils.make_dataset
-
-
 model.WindowGenerator.train = utils.train
 model.WindowGenerator.val = utils.val
 model.WindowGenerator.test = utils.test
 model.WindowGenerator.example = utils.example
 
-# Each element is an (inputs, label) pair.
-w2.train.element_spec
-
-for example_inputs, example_labels in w2.train.take(1):
-  print(f'Inputs shape (batch, time, features): {example_inputs.shape}')
-  print(f'Labels shape (batch, time, features): {example_labels.shape}')
-
-  single_step_window = model.WindowGenerator(
-    input_width=1, label_width=1, shift=1,train_df=train_df, val_df=val_df, test_df=test_df,
-    label_columns=['flow'])
-single_step_window
-
-class Baseline(tf.keras.Model):
-  def __init__(self, label_index=None):
-    super().__init__()
-    self.label_index = label_index
-
-  def call(self, inputs):
-    if self.label_index is None:
-      return inputs
-    result = inputs[:, :, self.label_index]
-    return result[:, :, tf.newaxis]
-
-baseline = Baseline(label_index=column_indices['flow'])
-
-baseline.compile(loss=tf.losses.MeanSquaredError(),
-                 metrics=[tf.metrics.MeanAbsoluteError()])
-
 val_performance = {}
 performance = {}
-val_performance['Baseline'] = baseline.evaluate(single_step_window.val)
-performance['Baseline'] = baseline.evaluate(single_step_window.test, verbose=0)
-
-wide_window = model.WindowGenerator(
-    input_width=24, label_width=24, shift=1,train_df=train_df, val_df=val_df, test_df=test_df,
-    label_columns=['flow'])
-
-print(wide_window)
-
-print('Input shape:', wide_window.example[0].shape)
-print('Output shape:', baseline(wide_window.example[0]).shape)
-
-wide_window.plot(plot_col='flow',model=baseline)
-
-MAX_EPOCHS = 20
-
-def compile_and_fit(model, window, patience=2):
-  early_stopping = tf.keras.callbacks.EarlyStopping(monitor='val_loss',
-                                                    patience=patience,
-                                                    mode='min')
-
-  model.compile(loss=tf.losses.MeanSquaredError(),
-                optimizer=tf.optimizers.Adam(),
-                metrics=[tf.metrics.MeanAbsoluteError()])
-
-  history = model.fit(window.train, epochs=MAX_EPOCHS,
-                      validation_data=window.val,
-                      callbacks=[early_stopping])
-  return history
 
 
 CONV_WIDTH = 3
@@ -126,7 +57,7 @@ conv_window = model.WindowGenerator(
     label_width=1,
     shift=1,
     train_df=train_df, val_df=val_df, test_df=test_df,
-    label_columns=['flow'])
+    label_columns=['flow','density','speed'])
 
 LABEL_WIDTH = 24
 INPUT_WIDTH = LABEL_WIDTH + (CONV_WIDTH - 1)
@@ -135,25 +66,31 @@ wide_conv_window = model.WindowGenerator(
     label_width=LABEL_WIDTH,
     shift=1,
     train_df=train_df, val_df=val_df, test_df=test_df,
-    label_columns=['flow'])
+
+    label_columns=['flow','density','speed'])
+
+
+
 conv_model = tf.keras.Sequential([
     tf.keras.layers.Conv1D(filters=32,
                            kernel_size=(CONV_WIDTH,),
                            activation='relu'),
     tf.keras.layers.Dense(units=32, activation='relu'),
-    tf.keras.layers.Dense(units=1),
+    tf.keras.layers.Dense(units=3),
 ])
-
 print("Conv model on `conv_window`")
 print('Input shape:', conv_window.example[0].shape)
 print('Output shape:', conv_model(conv_window.example[0]).shape)
 
 
-history = compile_and_fit(conv_model, conv_window)
+history = model.compile_and_fit(conv_model, conv_window,max_epochs=1)
 
-IPython.display.clear_output()
+keras.utils.plot_model(conv_model, "CNNSEQ_model.png", show_shapes=True)
+
+
 val_performance['Conv'] = conv_model.evaluate(conv_window.val)
 performance['Conv'] = conv_model.evaluate(conv_window.test, verbose=0)
 
 wide_conv_window.plot(plot_col='flow',model=conv_model)
-
+wide_conv_window.plot(plot_col='density',model=conv_model)
+wide_conv_window.plot(plot_col='speed',model=conv_model)
