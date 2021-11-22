@@ -2,83 +2,54 @@ from __future__ import print_function
 from __future__ import division
 
 import tensorflow.keras as keras
+import tensorflow as tf
 import tensorflow.keras.layers as layers
 
+class ConvTraff(tf.keras.Model):
 
-def model(x, mean, stddev, output_size, is_training=True, reuse=None):
-    net = (x - mean) / stddev  # Normalization of input
-
-
-    input_res1=layers.Input(shape = keras.shape(net))
-    x = layers.Conv2D(32,[3,3],[1,1])(input_res1) #Tal vez falta el scope,scope=scope + '_1'
-    x = layers.BatchNormalization()(x)#No parece muy igual
-    x = layers.Conv2D(32,[3,3],[1,1])(x)
-    x = layers.BatchNormalization()(x)
-    output_res1 = layers.ReLU(x)
-
-
-    x = layers.Conv2D(32,[3,3],[1,1])(output_res1) #Tal vez falta el scope,scope=scope + '_1'
-    x = layers.BatchNormalization()(x)#No parece muy igual
-    x = layers.Conv2D(32,[3,3],[1,1])(x)
-    x = layers.BatchNormalization()(x)
-    output_res2 = layers.ReLU(x)
+    def __init__(self, output_size, training=True):
+        super(ConvTraff, self).__init__()
+        self.res_1 = Resnet(32, training)
+        self.res_2 = Resnet(64, training)
+        self.res_3 = Resnet(96, training)
+        self.flatten = layers.Flatten()
+        self.dense_1 = layers.Dense(2048)
+        self.drop = layers.Dropout(.4, training)
+        self.dense_2 = layers.Dense(1024)
+        self.dense_3 = layers.Dense(output_size, activation=None)
 
 
-    x = layers.Conv2D(32,[3,3],[1,1])(output_res2) #Tal vez falta el scope,scope=scope + '_1'
-    x = layers.BatchNormalization()(x)#No parece muy igual
-    x = layers.Conv2D(32,[3,3],[1,1])(x)
-    x = layers.BatchNormalization()(x)
-    output_res3 = layers.ReLU(x)
+    def call(self, inputs):
+        input = keras.Input(inputs)
+        x = self.res_1(input)
+        x = self.res_1(x)
+        x = self.res_1(x)
 
+        x = self.res_2(x)
+        x = self.res_2(x)
+        x = self.res_2(x)
 
-    x = layers.Conv2D(64,[3,3],[1,1])(output_res3) #Tal vez falta el scope,scope=scope + '_1'
-    x = layers.BatchNormalization()(x)#No parece muy igual
-    x = layers.Conv2D(64,[3,3],[1,1])(x)
-    x = layers.BatchNormalization()(x)
-    output_res4 = layers.ReLU(x)
+        x = self.res_3(x)
+        x = self.res_3(x)
+        x = self.res_3(x)
 
+        x = self.flatten(x)
+        x = self.dense_1(x)
+        x = self.drop(x)
+        x = self.dense_2(x)
+        return self.dense_3(x)
 
-    x = layers.Conv2D(64,[3,3],[1,1])(output_res4) #Tal vez falta el scope,scope=scope + '_1'
-    x = layers.BatchNormalization()(x)#No parece muy igual
-    x = layers.Conv2D(64,[3,3],[1,1])(x)
-    x = layers.BatchNormalization()(x)
-    output_res5 = layers.ReLU(x)
+class Resnet(keras.layers.Layer):
+    def __init__(self,filters, training):
+        super(Resnet, self).__init__()
+        self.conv = layers.Conv2D(filters,[3,3],strides=[1,1],padding="same")
+        self.batch_norm = layers.BatchNormalization(training)
+        self.relu = tf.nn.relu(1)
 
-
-    x = layers.Conv2D(64,[3,3],[1,1])(output_res5) #Tal vez falta el scope,scope=scope + '_1'
-    x = layers.BatchNormalization()(x)#No parece muy igual
-    x = layers.Conv2D(64,[3,3],[1,1])(x)
-    x = layers.BatchNormalization()(x)
-    output_res6 = layers.ReLU(x)
-
-
-    x = layers.Conv2D(96,[3,3],[1,1])(output_res6) #Tal vez falta el scope,scope=scope + '_1'
-    x = layers.BatchNormalization()(x)#No parece muy igual
-    x = layers.Conv2D(96,[3,3],[1,1])(x)
-    x = layers.BatchNormalization()(x)
-    output_res7 = layers.ReLU(x)
-
-
-    x = layers.Conv2D(96,[3,3],[1,1])(output_res7) #Tal vez falta el scope,scope=scope + '_1'
-    x = layers.BatchNormalization()(x)#No parece muy igual
-    x = layers.Conv2D(96,[3,3],[1,1])(x)
-    x = layers.BatchNormalization()(x)
-    output_res8 = layers.ReLU(x)
-
-
-    x = layers.Conv2D(96,[3,3],[1,1])(output_res8) #Tal vez falta el scope,scope=scope + '_1'
-    x = layers.BatchNormalization()(x)#No parece muy igual
-    x = layers.Conv2D(96,[3,3],[1,1])(x)
-    x = layers.BatchNormalization()(x)
-    output_res9 = layers.ReLU(x)
-
-
-    net = layers.flatten(output_res9)
-
-    net = layers.fully_connected(net, 2048)
-    net = layers.dropout(net, keep_prob=0.6, )
-    net = layers.fully_connected(net, 1024)
-    out = layers.fully_connected(net, output_size, activation_fn=None)
-
-    model = keras.model(input,out,name='PruebaConvTraff')
-
+    def call(self, inputs):
+        x = self.conv(inputs)
+        x = self.batch_norm(x)
+        x = self.conv(x)
+        x = self.batch_norm(x)
+        return tf.nn.relu(x + inputs)
+         

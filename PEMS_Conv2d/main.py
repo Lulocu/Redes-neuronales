@@ -69,83 +69,37 @@ output_size = args.forecast_window
 
 net = (train_set - mean) / stddev  # Normalization of input
 
-net = tf.pad(net, [[0, 0], [0, 0], [0, 0], [14, 15]], "CONSTANT")
-input_res1=layers.Input(shape = (27,12,3))
-x = layers.Conv2D(32,[3,3],[1,1])(input_res1) #Tal vez falta el scope,scope=scope + '_1'
-x = layers.BatchNormalization()(x)#No parece muy igual
-x = layers.Conv2D(32,[3,3],[1,1])(x)
-x = layers.BatchNormalization()(x)
-output_res1 = tf.nn.relu(x)
+model = model.ConvTraff(output_size)
 
+model.compile(
+    loss=keras.losses.SparseCategoricalCrossentropy(from_logits=True),
+    optimizer=keras.optimizers.RMSprop(),
+    metrics=["accuracy"],
+)
 
-x = layers.Conv2D(32,[3,3],[1,1])(output_res1) #Tal vez falta el scope,scope=scope + '_1'
-x = layers.BatchNormalization()(x)#No parece muy igual
-x = layers.Conv2D(32,[3,3],[1,1])(x)
-x = layers.BatchNormalization()(x)
-output_res2 = tf.nn.relu(x)
-
-
-x = layers.Conv2D(32,[3,3],[1,1])(output_res2) #Tal vez falta el scope,scope=scope + '_1'
-x = layers.BatchNormalization()(x)#No parece muy igual
-x = layers.Conv2D(32,[3,3],[1,1])(x)
-x = layers.BatchNormalization()(x)
-output_res3 = tf.nn.relu(x)
-
-net = tf.pad(net, [[0, 0], [0, 0], [0, 0], [16, 16]])
-x = layers.Conv2D(64,[3,3],[1,1])(output_res3) #Tal vez falta el scope,scope=scope + '_1'
-x = layers.BatchNormalization()(x)#No parece muy igual
-x = layers.Conv2D(64,[3,3],[1,1])(x)
-x = layers.BatchNormalization()(x)
-output_res4 = tf.nn.relu(x)
-
-
-x = layers.Conv2D(64,[3,3],[1,1])(output_res4) #Tal vez falta el scope,scope=scope + '_1'
-x = layers.BatchNormalization()(x)#No parece muy igual
-x = layers.Conv2D(64,[3,3],[1,1])(x)
-x = layers.BatchNormalization()(x)
-output_res5 = tf.nn.relu(x)
-
-
-x = layers.Conv2D(64,[3,3],[1,1])(output_res5) #Tal vez falta el scope,scope=scope + '_1'
-x = layers.BatchNormalization()(x)#No parece muy igual
-x = layers.Conv2D(64,[3,3],[1,1])(x)
-x = layers.BatchNormalization()(x)
-output_res6 = tf.nn.relu(x)
-
-net = tf.pad(net, [[0, 0], [0, 0], [0, 0], [16, 16]])
-x = layers.Conv2D(96,[3,3],[1,1])(output_res6) #Tal vez falta el scope,scope=scope + '_1'
-x = layers.BatchNormalization()(x)#No parece muy igual
-x = layers.Conv2D(96,[3,3],[1,1])(x)
-x = layers.BatchNormalization()(x)
-output_res7 = tf.nn.relu(x)
-
-
-x = layers.Conv2D(96,[3,3],[1,1])(output_res7) #Tal vez falta el scope,scope=scope + '_1'
-x = layers.BatchNormalization()(x)#No parece muy igual
-x = layers.Conv2D(96,[3,3],[1,1])(x)
-x = layers.BatchNormalization()(x)
-output_res8 = tf.nn.relu(x)
-
-
-x = layers.Conv2D(96,[3,3],[1,1])(output_res8) #Tal vez falta el scope,scope=scope + '_1'
-x = layers.BatchNormalization()(x)#No parece muy igual
-x = layers.Conv2D(96,[3,3],[1,1])(x)
-x = layers.BatchNormalization()(x)
-output_res9 = tf.nn.relu(x)
-
-
-net = layers.flatten(output_res9)
-
-net = layers.fully_connected(net, 2048)
-net = layers.dropout(net, keep_prob=0.6, )
-net = layers.fully_connected(net, 1024)
-out = layers.fully_connected(net, output_size, activation_fn=None)
-
-model = keras.model(input,out,name='PruebaConvTraff')
+history = model.fit(train_set, train_labels, epochs=2, validation_split=0.2)
 
 model.summary()
 keras.utils.plot_model(model, "PruebaConvTraff.png", show_shapes=True)
 
+print('\nComienza la compilación \n')
+
+model.compile(
+    loss=keras.losses.SparseCategoricalCrossentropy(from_logits=True),
+    optimizer=keras.optimizers.RMSprop(),
+    metrics=["accuracy"],
+)
+
+#Entrenamiento
+
+
+#Evaluación
+test_scores = model.evaluate(valid_set, valid_labels, verbose=2)
+print("Test loss:", test_scores[0])
+print("Test accuracy:", test_scores[1])
+
+
+output = model(train_set,mean)
 '''
 graph = tf.Graph()
 with graph.as_default():
@@ -198,7 +152,7 @@ with tf.Session(graph=graph) as session:
     v = train_labels.shape[1] // 2  # We predict a traffic variable for the road section in the middle
 
     t1 = time.time()
-    for step in range(args.max_steps + 1):
+    for step in range(args.max_tepss + 1):
         offset = (step * args.batch_size) % (train_labels.shape[0])
         batch_data = train_set[offset:offset + args.batch_size]
         batch_labels_q = train_labels[offset:offset + args.batch_size, v, :, 0]  # 0: Flow, 1: Occupancy, 2: Speed
@@ -315,4 +269,6 @@ with tf.Session(graph=graph) as session:
 
     np.save('test_prediction_' + str(args.ensemble) + '.npy', te)
     np.save('test_labels_' + str(args.ensemble) + '.npy', test_labels[:, v, :, 0])
+
+
 '''
