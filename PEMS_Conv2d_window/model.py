@@ -27,7 +27,7 @@ class ConvTraff(keras.Model):
 
     def call(self, inputs):
 
-        input = tf.pad(inputs, [[0, 0], [0, 0], [0, 0], [14, 15]])
+        input= layers.ZeroPadding2D([(0,0),(14,15)],data_format= 'channels_first')(inputs)
         x = self.res32_1(input)
         x = self.res32_2(x)
         x = self.res32_3(x)
@@ -73,7 +73,7 @@ class Resnet(keras.layers.Layer):
         
         a = self.conv(inputs)
         b = self.batch_norm(a)
-        #b = tf.nn.relu(b)   #NuevaAdicion
+        b = tf.nn.relu(b)   #NuevaAdicion       
         c = self.conv2(b)
         x = self.batch_norm2(c)
         return tf.nn.relu(x + inputs)

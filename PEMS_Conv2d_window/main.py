@@ -49,7 +49,7 @@ del dataset
 
 
 var_pred = utils.traff_var.FLOW
-road_pred = 13
+road_pred = train_labels.shape[1] // 2
 
 train_set = (train_set - mean) / stddev
 valid_set = (valid_set - mean) / stddev
@@ -74,9 +74,9 @@ test_labels = test_labels[:,:,:,var_pred]
 
 conv_model = model.ConvTraff(output_size)
 
-history = utils.compile_and_fit(conv_model,train_set,train_labels,
-            initial_learning_rate = args.learning_rate,decay_steps = args.decay_steps, 
-            decay_rate = args.decay_rate,gradient_clip =args.gradient_clip)
+history = utils.compile_and_fit(conv_model,train_set,train_labels, valid_set, valid_labels,
+                initial_learning_rate = args.learning_rate,decay_steps = args.decay_steps, 
+            decay_rate = args.decay_rate,gradient_clip =args.gradient_clip,max_epochs=500)
 
 
 conv_model.build_graph().summary()

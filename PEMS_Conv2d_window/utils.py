@@ -175,7 +175,7 @@ class traff_var(IntEnum):
 def l2loss(y_true, y_pred):
     return tf.nn.l2_loss(y_pred - y_true)
 
-def compile_and_fit(model, train_set,train_labels, initial_learning_rate, decay_steps, 
+def compile_and_fit(model, train_set,train_labels,valid_set, valid_labels, initial_learning_rate, decay_steps, 
             decay_rate,gradient_clip, max_epochs = 20):
 
     learning_rate = tf.keras.optimizers.schedules.ExponentialDecay(
@@ -188,7 +188,7 @@ def compile_and_fit(model, train_set,train_labels, initial_learning_rate, decay_
                     tf.keras.metrics.MeanSquaredError(),
                     tf.keras.metrics.RootMeanSquaredError()])
 
-    history = model.fit(train_set,train_labels, epochs= max_epochs)
+    history = model.fit(train_set,train_labels,validation_data = (valid_set, valid_labels), epochs= max_epochs,shuffle=True)
     return history
 
 def plot(history):
