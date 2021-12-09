@@ -76,7 +76,7 @@ conv_model = model.ConvTraff(output_size)
 
 history = utils.compile_and_fit(conv_model,train_set,train_labels, valid_set, valid_labels,
                 initial_learning_rate = args.learning_rate,decay_steps = args.decay_steps, 
-            decay_rate = args.decay_rate,gradient_clip =args.gradient_clip,max_epochs=500)
+            decay_rate = args.decay_rate,gradient_clip =args.gradient_clip,max_epochs=150)
 
 
 conv_model.build_graph().summary()

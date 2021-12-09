@@ -48,15 +48,36 @@ class ConvTraff(keras.Model):
         x = self.drop(x)
         x = self.dense_2(x)
         return self.dense_3(x)
-    
-    def summary(self):
-        x = keras.Input(shape=(27, 12, 3))
-        model = keras.Model(inputs=[x], outputs=self.call(x))
-        return model.summary() 
-         
+     
+    def get_config(self):
+        config = super(ConvTraff, self).get_config()
+        config.update({"res32_1": self.res32_1,
+                       "res32_2": self.res32_2,
+                       "res32_3": self.res32_3,
+
+                       "res64_1": self.res64_1,
+                       "res64_2": self.res64_2,
+                       "res64_3": self.res64_3,
+
+                       "res96_1": self.res96_1,
+                       "res96_2": self.res96_2,
+                       "res96_3": self.res96_3,
+
+                       "flatten": self.flatten,
+                       "dense_1": self.dense_1,
+                       "drop": self.drop,
+                       "dense_2": self.dense_2,
+                       "dense_3": self.dense_3})
+        return config
+
+
     def build_graph(self):
         x = keras.Input(shape=(27, 12, 3))
         return keras.Model(inputs=[x], outputs=self.call(x))
+
+    def summary(self):
+
+        return self.build_graph.summary() 
 
 
 class Resnet(keras.layers.Layer):

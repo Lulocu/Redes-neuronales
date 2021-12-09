@@ -9,14 +9,6 @@ import utils
 import model
 import argparse
 
-#path = '/home/luis/Documentos/pruebaRedes/datasetsMini/'
-#file_dataset = '2015.csv'
-#file_test = '2016.csv'
-##file_validate = '2016Prueba.csv'
-#filename_dataset = os.path.join(path,file_dataset)
-#filename_val = os.path.join(path,file_test)
-#
-#train_df, val_df, test_df = utils.get_normalised_data(filename_dataset,filename_val)
 
 parser = argparse.ArgumentParser(description='Trains a convolutional network for traffic prediction.')
 files_group = parser.add_argument_group('Data files')
@@ -61,7 +53,6 @@ mean = dataset[8]
 stddev = dataset[9]
 del dataset
 
-#train_set,valid_set,valid_set2 = utils.get_normalised_data(args.datasets[0],args.valid_set[0])
 
 var_pred = 0
 
@@ -84,15 +75,7 @@ l1=model.Resnet(64,training=True)(l1)
 l2=layers.Dense(units=1)(l1)
 conv_model = keras.Model(inputs=input,outputs = l2, name= 'functionalAPI')
 
-#input=keras.Input(shape=(27,12,3))
 conv_model.run_eagerly = True
-#a = layers.Conv2D(32,[3,3],strides=[1,1],padding="same")(input)
-#b = layers.BatchNormalization(training)(a)
-#c = layers.Conv2D(32,[3,3],strides=[1,1],padding="same")(b)
-#x = layers.BatchNormalization(training)(c)
-#outputs = layers.Dense(1, activation=None)(x)
-
-#conv_model = keras.Model(inputs=input,outputs = outputs, name= 'functionalAPI')
 
 conv_model.compile(loss=tf.losses.MeanSquaredError(),
                 optimizer=tf.keras.optimizers.SGD(),
@@ -105,15 +88,3 @@ history = conv_model.fit(train_set,train_labels)
 keras.utils.plot_model(conv_model, "CNNFUN_model.png", show_shapes=True)
 
 print(history.params)
-#wide_conv_window.plot(plot_col='flow',model=conv_model)
-#wide_conv_window.plot(plot_col='density',model=conv_model)
-#wide_conv_window.plot(plot_col='speed',model=conv_model)
-
-#utils.plot_mae_validation_loss(history)
-
-#utils.plot_mae_mape(history)
-
-#print('='*50)
-#print('VAL_perf:' + str(val_performance['Conv'][1]))
-#print('TEST_perf:' + str(performance['Conv'][1]))
-print('OK')

@@ -3,80 +3,7 @@ import matplotlib.pyplot as plt
 import tensorflow as tf
 import pandas as pd
 import os
-import pickle
-
-def get_normalised_data(train_df,valid_df,test_df = None):
-    """Gets the route to data's files andf returns train set, validate set and test set"""
-    train_df_npy = os.path.splitext(train_df)[0] + '.npy'
-
-    if os.path.exists(train_df_npy):
-        valid_df_npy = os.path.splitext(valid_df)[0]+ '.npy'
-        test_df_npy = os.path.splitext(test_df)[0]+ '.npy'
-
-        train_df = np.load(train_df_npy)
-        val_df = np.load(valid_df_npy)
-        test_df =np.load(test_df_npy)
-    
-    else:
-        train_df = pd.read_csv(train_df)
-        valid_file = pd.read_csv(valid_df)
-
-        if test_df != None:
-            test_file = pd.read_csv(test_df)
-            val_df = valid_file[:]
-            test_df = test_file[:]
-
-        else:
-            nt = len(valid_file)
-            valid_file = pd.read_csv(valid_df)
-            val_df = valid_file[int(nt*0.7):]
-            test_df = valid_file[:int(nt*0.7)]
-
-
-        train_mean = train_df.mean()
-        train_std = train_df.std()
-        #train_df = (train_df - train_mean) / train_std
-        #val_df = (val_df - train_mean) / train_std
-        #test_df = (test_df - train_mean) / train_std
-
-        np.save('train_set.npy',train_df)
-        np.save('valid_set.npy',val_df)
-        np.save('test_set.npy',test_df)
-
-    return train_df, val_df, test_df
-
-def plot(self, plot_col, model=None, max_subplots=3):
-    inputs, labels = self.example
-    plt.figure(figsize=(12, 8))
-    plot_col_index = self.column_indices[plot_col]
-    max_n = min(max_subplots, len(inputs))
-    for n in range(max_n):
-      plt.subplot(max_n, 1, n+1)
-      plt.ylabel(f'{plot_col} [normed]')
-      plt.plot(self.input_indices, inputs[n, :, plot_col_index],
-               label='Inputs', marker='.', zorder=-10)
-  
-      if self.label_columns:
-        label_col_index = self.label_columns_indices.get(plot_col, None)
-      else:
-        label_col_index = plot_col_index
-  
-      if label_col_index is None:
-        continue
-  
-      plt.scatter(self.label_indices, labels[n, :, label_col_index],
-                  edgecolors='k', label='Labels', c='#2ca02c', s=64)
-      if model is not None:
-        predictions = model(inputs)
-        plt.scatter(self.label_indices, predictions[n, :, label_col_index],
-                    marker='X', edgecolors='k', label='Predictions',
-                    c='#ff7f0e', s=64)
-  
-      if n == 0:
-        plt.legend()
-  
-    plt.xlabel('Time [h]')      
-    plt.show()      
+import pickle  
 
 def make_dataset(self, data):
     data = np.array(data, dtype=np.float32)
@@ -115,49 +42,6 @@ def example(self):
     return result
 
 
-def plot_mae_validation_loss(history):
-    mae = history.history['mean_absolute_error']
-    val_mae = history.history['val_mean_absolute_error']
-    loss = history.history['loss']
-    val_loss = history.history['val_loss']
-
-    epochs = range(1, len(mae) + 1)
-
-    plt.plot(epochs, mae, 'bo', label='Training mae')
-    plt.plot(epochs, val_mae, 'b', label='Validation mae')
-    plt.title('Training and validation mae')
-    plt.legend()
-
-    plt.figure()
-
-    plt.plot(epochs, loss, 'bo', label='Training loss')
-    plt.plot(epochs, val_loss, 'b', label='Validation loss')
-    plt.title('Training and validation loss')
-    plt.legend()
-
-    plt.show()
-
-def plot_mae_mape(history):
-    mae = history.history['mean_absolute_error']
-    val_mae = history.history['val_mean_absolute_error']
-    mape = history.history['mean_absolute_error']
-    val_mape = history.history['val_mean_absolute_percentage_error']
-
-    epochs = range(1, len(mae) + 1)
-
-    plt.plot(epochs, mae, 'bo', label='Training mae')
-    plt.plot(epochs, val_mae, 'b', label='Validation mae')
-    plt.title('Training and validation mae')
-    plt.legend()
-
-    plt.figure()
-
-    plt.plot(epochs, mape, 'bo', label='Training mape')
-    plt.plot(epochs, val_mape, 'b', label='Validation mape')
-    plt.title('Training and validation mape')
-    plt.legend()
-
-    plt.show()
 def get_dataset_name(time_window, time_aggregation, forecast_window, forecast_aggregation, train_set_size,
                      valid_set_size):
     pickle_filename = 'dataset_'

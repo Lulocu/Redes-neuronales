@@ -178,17 +178,27 @@ def l2loss(y_true, y_pred):
 def compile_and_fit(model, train_set,train_labels,valid_set, valid_labels, initial_learning_rate, decay_steps, 
             decay_rate,gradient_clip, max_epochs = 20):
 
+    checkpoint_filepath = 'savedModel/'
+    model_checkpoint_callback = tf.keras.callbacks.ModelCheckpoint(
+        filepath=checkpoint_filepath,
+        save_weights_only=False,
+        monitor='l2_loss',
+        mode='auto',
+        save_freq='epoch',
+        save_best_only=False)
+
     learning_rate = tf.keras.optimizers.schedules.ExponentialDecay(
         initial_learning_rate, decay_steps, decay_rate, staircase=True)
 
     model.compile(loss=l2loss,#tf.losses.MeanAbsoluteError(),
-                    optimizer= keras.optimizers.SGD(learning_rate,clipnorm = gradient_clip),
+                    optimizer= keras.optimizers.SGD(learning_rate,clipnorm = gradient_clip,momentum = 0.9),
                     metrics=[tf.keras.metrics.MeanAbsoluteError(), 
                     tf.keras.metrics.MeanAbsolutePercentageError(),
                     tf.keras.metrics.MeanSquaredError(),
                     tf.keras.metrics.RootMeanSquaredError()])
 
-    history = model.fit(train_set,train_labels,validation_data = (valid_set, valid_labels), epochs= max_epochs,shuffle=True)
+    history = model.fit(train_set,train_labels,validation_data = (valid_set, valid_labels), 
+        epochs= max_epochs,shuffle=True, callbacks=[model_checkpoint_callback])
     return history
 
 def plot(history):

@@ -148,3 +148,5 @@ datasetsMini/
 *.png
 
 *.pickle
+
+*.txt
