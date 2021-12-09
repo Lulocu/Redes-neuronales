@@ -65,25 +65,6 @@ print("Test loss:", test_scores[0])
 print("Test accuracy:", test_scores[1])
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 '''
 #Visualizar datos
 for i in range(9):

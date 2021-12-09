@@ -1,0 +1,4 @@
+Ventanas
+VAL_perf:81.7336196899414
+TEST_perf:73.3061752319336
+VentanasConv2D

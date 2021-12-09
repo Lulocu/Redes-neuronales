@@ -12,7 +12,7 @@ import IPython.display
 
 path = '/home/luis/Documentos/pruebaRedes/datasetsMini/'
 file_dataset = '2015.csv'
-file_test = '2016Prueba.csv'
+file_test = '2016.csv'
 #file_validate = '2016Prueba.csv'
 filename_dataset = os.path.join(path,file_dataset)
 filename_test = os.path.join(path,file_test)

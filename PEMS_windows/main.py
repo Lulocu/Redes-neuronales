@@ -9,12 +9,17 @@ import model
 
 path = '/home/luis/Documentos/pruebaRedes/datasetsMini/'
 file_dataset = '2015.csv'
-file_test = '2016Prueba.csv'
+file_test = '2016.csv'
 #file_validate = '2016Prueba.csv'
 filename_dataset = os.path.join(path,file_dataset)
 filename_val = os.path.join(path,file_test)
 
 train_df, val_df, test_df = utils.get_normalised_data(filename_dataset,filename_val)
+
+train_df = train_df[:int(0.3)*len(train_df)]
+val_df = val_df[:int(0.3)*len(val_df)]
+test_df = test_df[:int(0.3)*len(test_df)]
+
 
 #Añades al modelo los datasets necesarios
 model.WindowGenerator.plot = utils.plot

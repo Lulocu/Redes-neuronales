@@ -137,3 +137,16 @@ datasetsMini/
 
 # vscode
 .vscode/
+
+#csv
+*.csv
+
+#pickle
+*.pickle
+
+#Images
+*.png
+
+*.pickle
+
+*.txt
