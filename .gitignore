@@ -150,3 +150,6 @@ datasetsMini/
 *.pickle
 
 *.txt
+
+logs/
+savedModel/

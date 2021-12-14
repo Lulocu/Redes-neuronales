@@ -1,8 +1,11 @@
+from tensorflow.keras import backend
 import argparse
 import tensorflow as tf
-
+import csv
 import utils
 import model
+import os
+import tensorflow as tf
 
 parser = argparse.ArgumentParser(description='Trains a convolutional network for traffic prediction.')
 files_group = parser.add_argument_group('Data files')
@@ -17,9 +20,12 @@ prediction_group.add_argument('-tw', '--time_window', default=12, type=int, help
 prediction_group.add_argument('-ta', '--time_aggregation', default=1, type=int, help='steps aggregated for net input')
 prediction_group.add_argument('-fw', '--forecast_window', default=1, type=int, help='time window to be predicted')
 prediction_group.add_argument('-fa', '--forecast_aggregation', default=1, type=int, help='steps aggregated in forecast')
+prediction_group.add_argument('-rp', '--road_prediction', default=1,choices=range(0,27), type=int, help='road segment to predict')
+prediction_group.add_argument('-vpr', '--variable_prediction', default=0, type=int,choices=[0,1,2], help='variable to be predicted')
+
 training_group = parser.add_argument_group('Training parameters')
-training_group.add_argument('-ts', '--train_set_size', default=70000, type=int, help='training set size')
-training_group.add_argument('-vs', '--valid_set_size', default=30000, type=int, help='validation set size')
+training_group.add_argument('-ts', '--train_set_size', default=700, type=int, help='training set size')
+training_group.add_argument('-vs', '--valid_set_size', default=300, type=int, help='validation set size')
 training_group.add_argument('-vp', '--valid_partitions', default=100, type=int, help='validation set partitions number')
 training_group.add_argument('-tp', '--test_partitions', default=100, type=int, help='test set partitions number')
 training_group.add_argument('-b', '--batch_size', default=70, type=int, help='batch size for SGD')
@@ -30,6 +36,8 @@ training_group.add_argument('-c', '--gradient_clip', default=40.0, type=float, h
 training_group.add_argument('-m', '--max_steps', default=10000, type=int, help='max number of iterations for training')
 training_group.add_argument('-s', '--save', action='store_true', help='save the model every epoch')
 training_group.add_argument('-ens', '--ensemble', default=1, type=int, help='Number of the model in the ensemble')
+comparative_group = parser.add_argument_group('Comparative group')
+comparative_group.add_argument('-cf', '--comparative_file',type=str, help='file to print final error measurement')
 args = parser.parse_args()
 
 pickle_filename = utils.get_dataset_name(args.time_window, args.time_aggregation, args.forecast_window,
@@ -48,8 +56,8 @@ stddev = dataset[9]
 del dataset
 
 
-var_pred = utils.traff_var.FLOW
-road_pred = train_labels.shape[1] // 2
+var_pred = utils.traff_var(args.variable_prediction)
+#args.road_prediction = train_labels.shape[1] // 2
 
 train_set = (train_set - mean) / stddev
 valid_set = (valid_set - mean) / stddev
@@ -72,22 +80,34 @@ valid_labels = valid_labels[:,:,:,var_pred]
 valid_labels2 = valid_labels2[:,:,:,var_pred]
 test_labels = test_labels[:,:,:,var_pred]
 
+backend.clear_session()
+
 conv_model = model.ConvTraff(output_size)
+
 
 history = utils.compile_and_fit(conv_model,train_set,train_labels, valid_set, valid_labels,
                 initial_learning_rate = args.learning_rate,decay_steps = args.decay_steps, 
-            decay_rate = args.decay_rate,gradient_clip =args.gradient_clip,max_epochs=150)
+            decay_rate = args.decay_rate,gradient_clip =args.gradient_clip,max_epochs=20,
+            batch=args.batch_size)
 
 
 conv_model.build_graph().summary()
 
 tf.keras.utils.plot_model(
+
     conv_model.build_graph(),
     to_file='PruebaConvTraff.png', dpi=96,
     show_shapes=True, show_layer_names=True,
     expand_nested=False
 )
 
+if args.comparative_file != None:
+    with open(args.comparative_file, 'a') as f:
+        writer = csv.writer(f)
+        writer.writerow([args.batch_size, args.learning_rate,args.decay_rate,
+        history.history['loss'][-1],history.history['mean_absolute_error'][-1],
+        history.history['mean_squared_error'][-1],history.history['root_mean_squared_error'][-1]
+        ])
 
 print('='*50)
 print('loss:' + str(history.history['loss']))

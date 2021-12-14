@@ -1,5 +1,5 @@
 #!/bin/sh
-'''exec' "/home/luis/Documentos/Redes Neuronales/redPrueba/bin/python3" "$0" "$@"
+'''exec' "/home/luis/Documentos/pruebaRedes/redPrueba/bin/python3" "$0" "$@"
 ' '''
 # -*- coding: utf-8 -*-
 import re

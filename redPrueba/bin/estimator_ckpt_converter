@@ -1,6 +1,4 @@
-#!/bin/sh
-'''exec' "/home/luis/Documentos/Redes Neuronales/redPrueba/bin/python3" "$0" "$@"
-' '''
+#!/home/luis/Documentos/pruebaRedes/redPrueba/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys
