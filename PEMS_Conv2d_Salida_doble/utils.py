@@ -170,7 +170,7 @@ def get_dataset(pickle_filename, args, parser):
     del save
     return (train_set, train_labels, valid_set, valid_labels, valid_set2, valid_labels2, test_set, test_labels, mean,
             stddev)
-            
+
 class traff_var(IntEnum):
     FLOW = 0
     OCCUPANCY = 1
@@ -225,8 +225,8 @@ def plot_history(history):
 
 def plot_prediction(real_data, prediction):
 
-    plt.plot(range(len(real_data)),real_data.flatten(),marker='o', linestyle='--', color='r', label="real data")
-    plt.plot(range(len(prediction)),prediction.flatten(),marker='o', linestyle='-.', color='b', label="prediction")
+    plt.plot(range(len(real_data.flatten())),real_data.flatten(),marker='o', linestyle='--', color='r', label="real data")
+    plt.plot(range(len(prediction.flatten())),prediction.flatten(),marker='o', linestyle='-.', color='b', label="prediction")
     plt.title('Compare prediction and real ground')
     plt.legend()
     plt.xticks(range(len(real_data)))

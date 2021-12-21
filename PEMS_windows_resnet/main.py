@@ -2,7 +2,7 @@ from matplotlib.pyplot import hist
 import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers
-import os
+import datetime
 
 from tensorflow.python.keras.engine import training
 import utils
@@ -24,8 +24,8 @@ prediction_group.add_argument('-ta', '--time_aggregation', default=1, type=int, 
 prediction_group.add_argument('-fw', '--forecast_window', default=1, type=int, help='time window to be predicted')
 prediction_group.add_argument('-fa', '--forecast_aggregation', default=1, type=int, help='steps aggregated in forecast')
 training_group = parser.add_argument_group('Training parameters')
-training_group.add_argument('-ts', '--train_set_size', default=70000, type=int, help='training set size')
-training_group.add_argument('-vs', '--valid_set_size', default=30000, type=int, help='validation set size')
+training_group.add_argument('-ts', '--train_set_size', default=700, type=int, help='training set size')
+training_group.add_argument('-vs', '--valid_set_size', default=300, type=int, help='validation set size')
 training_group.add_argument('-vp', '--valid_partitions', default=100, type=int, help='validation set partitions number')
 training_group.add_argument('-tp', '--test_partitions', default=100, type=int, help='test set partitions number')
 training_group.add_argument('-b', '--batch_size', default=70, type=int, help='batch size for SGD')
@@ -82,7 +82,13 @@ conv_model.compile(loss=tf.losses.MeanSquaredError(),
                 metrics=[tf.keras.metrics.MeanAbsoluteError(), tf.keras.metrics.MeanAbsolutePercentageError(),
                 tf.keras.metrics.MeanSquaredError(),tf.keras.metrics.RootMeanSquaredError()])
 
-history = conv_model.fit(train_set,train_labels)
+
+log_dir = "logs/fit/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir, histogram_freq=1,
+    write_images=True, write_steps_per_second=True,embeddings_freq=1)
+
+
+history = conv_model.fit(train_set,train_labels,epochs=20,callbacks=[tensorboard_callback])
 
 
 keras.utils.plot_model(conv_model, "CNNFUN_model.png", show_shapes=True)
