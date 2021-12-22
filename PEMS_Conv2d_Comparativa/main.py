@@ -29,7 +29,7 @@ training_group.add_argument('-ts', '--train_set_size', default=70000, type=int, 
 training_group.add_argument('-vs', '--valid_set_size', default=30000, type=int, help='validation set size')
 training_group.add_argument('-vp', '--valid_partitions', default=100, type=int, help='validation set partitions number')
 training_group.add_argument('-tp', '--test_partitions', default=100, type=int, help='test set partitions number')
-training_group.add_argument('-b', '--batch_size', default=70, type=int, help='batch size for SGD')
+training_group.add_argument('-b', '--batch_size', default=16, type=int, help='batch size for SGD')
 training_group.add_argument('-l', '--learning_rate', default=1e-4, type=float, help='learning rate for SGD')
 training_group.add_argument('-dr', '--decay_rate', default=0.1, type=float, help='learning rate decay rate')
 training_group.add_argument('-ds', '--decay-steps', default=1000, type=int, help='learning rate decay steps')
