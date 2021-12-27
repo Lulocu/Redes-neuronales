@@ -85,8 +85,6 @@ def get_dataset(pickle_filename, args, parser):
             valid_labels2 = save['valid_labels2']
             test_set = save['test_set']
             test_labels = save['test_labels']
-            mean = save['mean']
-            stddev = save['stddev']
             f.close()
 
         train_set = np.load('train_set.npy')
@@ -135,8 +133,6 @@ def get_dataset(pickle_filename, args, parser):
         test_set = np.asarray(test_set)
         test_labels = np.asarray(test_labels)
 
-        mean = np.mean(dataset, axis=(0, 1, 2))
-        stddev = np.std(dataset, axis=(0, 1, 2))
 
         train_set = dataset[:args.train_set_size]
         train_labels = labels[:args.train_set_size]
@@ -156,8 +152,6 @@ def get_dataset(pickle_filename, args, parser):
             'valid_labels2': valid_labels2,
             'test_set': test_set,
             'test_labels': test_labels,
-            'mean': mean,
-            'stddev': stddev
         }
 
         f = open(pickle_filename, 'wb')
@@ -168,8 +162,7 @@ def get_dataset(pickle_filename, args, parser):
         np.save('train_labels.npy', train_labels)
 
     del save
-    return (train_set, train_labels, valid_set, valid_labels, valid_set2, valid_labels2, test_set, test_labels, mean,
-            stddev)
+    return (train_set, train_labels, valid_set, valid_labels, valid_set2, valid_labels2, test_set, test_labels)
             
 class traff_var(IntEnum):
     FLOW = 0
@@ -196,8 +189,6 @@ def compile_and_fit(model, train_set,train_labels,valid_set, valid_labels, initi
         save_freq='epoch',
         save_best_only=False)
 
-    csv_logger = keras.callbacks.CSVLogger('training.log',append =True)
-
     learning_rate = tf.keras.optimizers.schedules.ExponentialDecay(
         initial_learning_rate, decay_steps, decay_rate, staircase=True)
 
@@ -209,8 +200,8 @@ def compile_and_fit(model, train_set,train_labels,valid_set, valid_labels, initi
                     tf.keras.metrics.RootMeanSquaredError()])
 
     history = model.fit(train_set,train_labels,validation_data = (valid_set, valid_labels), 
-        batch_size = batch, epochs= max_epochs,shuffle=True,
-        callbacks=[csv_logger]) #, callbacks=[model_checkpoint_callback]
+        batch_size = batch, epochs= max_epochs,shuffle=True)#,
+        #,callbacks=[tensorboard_callback]) #, callbacks=[model_checkpoint_callback]
     return history
 
 def plot_history(history):
@@ -227,8 +218,8 @@ def plot_history(history):
 
 def plot_prediction(real_data, prediction):
 
-    plt.plot(range(len(real_data.flatten())),real_data.flatten(),marker='o', linestyle='--', color='r', label="real data")
-    plt.plot(range(len(prediction.flatten())),prediction.flatten(),marker='o', linestyle='-.', color='b', label="prediction")
+    plt.plot(range(len(real_data)),real_data.flatten(),marker='o', linestyle='--', color='r', label="real data")
+    plt.plot(range(len(prediction)),prediction.flatten(),marker='o', linestyle='-.', color='b', label="prediction")
     plt.title('Compare prediction and real ground')
     plt.legend()
     plt.xticks(range(len(real_data)))

@@ -29,7 +29,7 @@ training_group.add_argument('-ts', '--train_set_size', default=70000, type=int, 
 training_group.add_argument('-vs', '--valid_set_size', default=30000, type=int, help='validation set size')
 training_group.add_argument('-vp', '--valid_partitions', default=100, type=int, help='validation set partitions number')
 training_group.add_argument('-tp', '--test_partitions', default=100, type=int, help='test set partitions number')
-training_group.add_argument('-b', '--batch_size', default=50, type=int, help='batch size for SGD')
+training_group.add_argument('-b', '--batch_size', default=16, type=int, help='batch size for SGD')
 training_group.add_argument('-l', '--learning_rate', default=1e-4, type=float, help='learning rate for SGD')
 training_group.add_argument('-dr', '--decay_rate', default=0.1, type=float, help='learning rate decay rate')
 training_group.add_argument('-ds', '--decay-steps', default=1000, type=int, help='learning rate decay steps')
@@ -54,18 +54,13 @@ valid_set2 = dataset[4]
 valid_labels2 = dataset[5]
 test_set = dataset[6]
 test_labels = dataset[7]
-mean = dataset[8]
-stddev = dataset[9]
+
 del dataset
 
 
 
 var_pred = utils.traff_var(args.variable_prediction)
 
-train_set = (train_set - mean) / stddev
-valid_set = (valid_set - mean) / stddev
-valid_set2 = (valid_set2 - mean) / stddev
-test_set = (test_set - mean) / stddev
 
 
 print('Training set', train_set.shape, train_labels.shape)
@@ -93,16 +88,23 @@ history = utils.compile_and_fit(conv_model,train_set,train_labels, valid_set, va
 pred   = conv_model.predict(test_set)
 
 
-conv_model.build_graph(31,args.time_window).summary()
+conv_model.build_graph().summary()
 
 tf.keras.utils.plot_model(
 
-    conv_model.build_graph(31,args.time_window),
+    conv_model.build_graph(),
     to_file='ConvTraffBase.png', dpi=96,
     show_shapes=True, show_layer_names=True,
     expand_nested=False
 )
 
+if args.comparative_file != None:
+    with open(args.comparative_file, 'a') as f:
+        writer = csv.writer(f)
+        writer.writerow([args.batch_size, args.learning_rate,args.decay_rate,
+        history.history['loss'][-1],history.history['mean_absolute_error'][-1],
+        history.history['mean_squared_error'][-1],history.history['root_mean_squared_error'][-1]
+        ])
 
 print('='*50)
 print('loss:' + str(history.history['loss']))
@@ -114,7 +116,7 @@ print('rmse:' + str(history.history['root_mean_squared_error']))
 
 
 #utils.plot_history(history)
-utils.plot_prediction(test_labels[0:50], pred[0:50])
+utils.plot_prediction(test_labels[150:200], pred[150:200])
 
 print('MAE in test_set:')
 print(tf.keras.losses.mean_absolute_error(test_labels.flatten(),pred.flatten()).numpy())

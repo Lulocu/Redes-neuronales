@@ -6,6 +6,7 @@ class ConvTraff(keras.Model):
 
     def __init__(self, output_size, training=True):
         super(ConvTraff, self).__init__()
+        self.norm = layers.BatchNormalization()
         self.res32_1 = Resnet(32, training)
         self.res32_2 = Resnet(32, training)
         self.res32_3 = Resnet(32, training)
@@ -27,8 +28,9 @@ class ConvTraff(keras.Model):
 
     def call(self, inputs):
 
-        input= layers.ZeroPadding2D([(0,0),(14,15)],data_format= 'channels_first')(inputs)
-        x = self.res32_1(input)
+        input= self.norm(inputs)
+        x=layers.ZeroPadding2D([(0,0),(14,15)],data_format= 'channels_first')(input)
+        x = self.res32_1(x)
         x = self.res32_2(x)
         x = self.res32_3(x)
 
@@ -51,7 +53,9 @@ class ConvTraff(keras.Model):
      
     def get_config(self):
         config = super(ConvTraff, self).get_config()
-        config.update({"res32_1": self.res32_1,
+        config.update({
+                       "norm": self.norm,
+                       "res32_1": self.res32_1,
                        "res32_2": self.res32_2,
                        "res32_3": self.res32_3,
 
@@ -71,8 +75,8 @@ class ConvTraff(keras.Model):
         return config
 
 
-    def build_graph(self, y, time_window):
-        x = keras.Input(shape=(31, 12, 3))
+    def build_graph(self):
+        x = keras.Input(shape=(27, 12, 3))
         return keras.Model(inputs=[x], outputs=self.call(x))
 
     def summary(self):
