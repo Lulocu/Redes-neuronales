@@ -85,6 +85,8 @@ def get_dataset(pickle_filename, args, parser):
             valid_labels2 = save['valid_labels2']
             test_set = save['test_set']
             test_labels = save['test_labels']
+            mean = save['mean']
+            stddev = save['stddev']
             f.close()
 
         train_set = np.load('train_set.npy')
@@ -133,6 +135,8 @@ def get_dataset(pickle_filename, args, parser):
         test_set = np.asarray(test_set)
         test_labels = np.asarray(test_labels)
 
+        mean = np.mean(dataset, axis=(0, 1, 2))
+        stddev = np.std(dataset, axis=(0, 1, 2))
 
         train_set = dataset[:args.train_set_size]
         train_labels = labels[:args.train_set_size]
@@ -152,6 +156,8 @@ def get_dataset(pickle_filename, args, parser):
             'valid_labels2': valid_labels2,
             'test_set': test_set,
             'test_labels': test_labels,
+            'mean': mean,
+            'stddev': stddev
         }
 
         f = open(pickle_filename, 'wb')
@@ -162,7 +168,8 @@ def get_dataset(pickle_filename, args, parser):
         np.save('train_labels.npy', train_labels)
 
     del save
-    return (train_set, train_labels, valid_set, valid_labels, valid_set2, valid_labels2, test_set, test_labels)
+    return (train_set, train_labels, valid_set, valid_labels, valid_set2, valid_labels2, test_set, test_labels, mean,
+            stddev)
             
 class traff_var(IntEnum):
     FLOW = 0
@@ -172,13 +179,13 @@ class traff_var(IntEnum):
 def l2loss(y_true, y_pred):
     return tf.nn.l2_loss(y_pred - y_true)
 
-#@profile
+@profile
 def compile_and_fit(model, train_set,train_labels,valid_set, valid_labels, initial_learning_rate, decay_steps, 
             decay_rate,gradient_clip,batch, max_epochs = 20):
 
-    log_dir = "logs/fit/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
-    tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir, histogram_freq=1,
-        write_images=True, write_steps_per_second=True,embeddings_freq=1)
+    #log_dir = "logs/fit/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+    #tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir, histogram_freq=1,
+    #    write_images=True, write_steps_per_second=True,embeddings_freq=1)
 
     checkpoint_filepath = 'savedModel/'
     model_checkpoint_callback = tf.keras.callbacks.ModelCheckpoint(
@@ -189,19 +196,22 @@ def compile_and_fit(model, train_set,train_labels,valid_set, valid_labels, initi
         save_freq='epoch',
         save_best_only=False)
 
+    csv_logger = keras.callbacks.CSVLogger('logs/ConvTraff.csv',append =True)
+
     learning_rate = tf.keras.optimizers.schedules.ExponentialDecay(
         initial_learning_rate, decay_steps, decay_rate, staircase=True)
 
-    model.compile(loss=l2loss,#tf.losses.MeanAbsoluteError(),
+    model.compile(loss=l2loss,#
                     optimizer= keras.optimizers.SGD(learning_rate,clipnorm = gradient_clip,momentum = 0.9),
                     metrics=[tf.keras.metrics.MeanAbsoluteError(), 
                     tf.keras.metrics.MeanAbsolutePercentageError(),
                     tf.keras.metrics.MeanSquaredError(),
                     tf.keras.metrics.RootMeanSquaredError()])
 
+
     history = model.fit(train_set,train_labels,validation_data = (valid_set, valid_labels), 
-        batch_size = batch, epochs= max_epochs,shuffle=True)#,
-        #,callbacks=[tensorboard_callback]) #, callbacks=[model_checkpoint_callback]
+        batch_size = batch, epochs= max_epochs,shuffle=True, verbose =2,
+        callbacks=[csv_logger])#, model_checkpoint_callback,tensorboard_callback])
     return history
 
 def plot_history(history):
@@ -218,11 +228,13 @@ def plot_history(history):
 
 def plot_prediction(real_data, prediction):
 
-    plt.plot(range(len(real_data)),real_data.flatten(),marker='o', linestyle='--', color='r', label="real data")
-    plt.plot(range(len(prediction)),prediction.flatten(),marker='o', linestyle='-.', color='b', label="prediction")
-    plt.title('Compare prediction and real ground')
-    plt.legend()
-    plt.xticks(range(len(real_data)))
-    plt.show()
+    for i in range(real_data.shape[-1]):
+        plt.plot(range(len(real_data[:,i])),real_data[:,i].flatten(),marker='o', linestyle='--', color='r', label="real data")
+        plt.plot(range(len(prediction[:,i])),prediction[:,i].flatten(),marker='o', linestyle='-.', color='b', label="prediction")
+        plt.title('Compare prediction and real ground on instant' + str(i))
+        plt.legend()
+        plt.xticks(range(len(real_data)))
+        plt.savefig('Images/ConvTraff/Grafica' + str(i) + '.png')
+        plt.clf()
 
         

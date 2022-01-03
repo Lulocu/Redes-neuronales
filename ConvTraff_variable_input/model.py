@@ -4,19 +4,21 @@ import tensorflow.keras.layers as layers
 
 class ConvTraff(keras.Model):
 
-    def __init__(self, output_size, training=True):
+    def __init__(self, output_size, time_window):
         super(ConvTraff, self).__init__()
-        self.res32_1 = Resnet(32, training)
-        self.res32_2 = Resnet(32, training)
-        self.res32_3 = Resnet(32, training)
+        self.inp = layers.Input(shape=(None,None,time_window,3))
+        self.norm = layers.BatchNormalization()
+        self.res32_1 = Resnet(32)
+        self.res32_2 = Resnet(32)
+        self.res32_3 = Resnet(32)
 
-        self.res64_1 = Resnet(64, training)
-        self.res64_2 = Resnet(64, training)
-        self.res64_3 = Resnet(64, training)
+        self.res64_1 = Resnet(64)
+        self.res64_2 = Resnet(64)
+        self.res64_3 = Resnet(64)
 
-        self.res96_1 = Resnet(96, training)
-        self.res96_2 = Resnet(96, training)
-        self.res96_3 = Resnet(96, training)
+        self.res96_1 = Resnet(96)
+        self.res96_2 = Resnet(96)
+        self.res96_3 = Resnet(96)
 
         self.flatten = layers.Flatten()
         self.dense_1 = layers.Dense(2048)
@@ -24,26 +26,33 @@ class ConvTraff(keras.Model):
         self.dense_2 = layers.Dense(1024)
         self.dense_3 = layers.Dense(output_size, activation=None)
 
+        self.avg_pool = layers.GlobalAveragePooling2D()
+        self.padding_1 = layers.Zeropadding_2D([(0,0),(14,15)],data_format= 'channels_first',input_shape =(None,None,None,3))
+        self.padding_2 = layers.Zeropadding_2D([(0,0),(16,16)],data_format= 'channels_first')
+        self.padding_3 = layers.Zeropadding_2D([(0,0),(16,16)],data_format= 'channels_first')
 
     def call(self, inputs):
 
-        input= layers.ZeroPadding2D([(0,0),(14,15)],data_format= 'channels_first')(inputs)
-        x = self.res32_1(input)
+        #input= self.inp(inputs)
+        x = self.norm(inputs)
+        x = self.padding_1(x)
+        x = self.res32_1(x)
         x = self.res32_2(x)
         x = self.res32_3(x)
 
 
-        x= layers.ZeroPadding2D([(0,0),(16,16)],data_format= 'channels_first')(x)
+        x = self.padding_2(x)
         x = self.res64_1(x)
         x = self.res64_2(x)
         x = self.res64_3(x)
 
-        x= layers.ZeroPadding2D([(0,0),(16,16)],data_format= 'channels_first')(x)
+        x = self.padding_3(x)
         x = self.res96_1(x)
         x = self.res96_2(x)
         x = self.res96_3(x)
 
-        x = self.flatten(x)
+        #x = self.flatten(x) #meter globalaverggaepolling
+        x = self.avg_pool(x)
         x = self.dense_1(x)
         x = self.drop(x)
         x = self.dense_2(x)
@@ -51,7 +60,9 @@ class ConvTraff(keras.Model):
      
     def get_config(self):
         config = super(ConvTraff, self).get_config()
-        config.update({"res32_1": self.res32_1,
+        config.update({
+                       "norm": self.norm,
+                       "res32_1": self.res32_1,
                        "res32_2": self.res32_2,
                        "res32_3": self.res32_3,
 
@@ -63,16 +74,23 @@ class ConvTraff(keras.Model):
                        "res96_2": self.res96_2,
                        "res96_3": self.res96_3,
 
-                       "flatten": self.flatten,
+                       "avg_pool":self.avg_pool,
                        "dense_1": self.dense_1,
                        "drop": self.drop,
                        "dense_2": self.dense_2,
-                       "dense_3": self.dense_3})
+                       "dense_3": self.dense_3,
+                       
+                       "padding_1": self.padding_1,
+                       "padding_2": self.padding_2,
+                       "padding_3": self.padding_3
+                       })
+
+
         return config
 
 
-    def build_graph(self, y, time_window):
-        x = keras.Input(shape=(31, 12, 3))
+    def build_graph(self,window):
+        x = keras.Input(shape=(None, window, 3))
         return keras.Model(inputs=[x], outputs=self.call(x))
 
     def summary(self):
@@ -82,13 +100,13 @@ class ConvTraff(keras.Model):
 
 class Resnet(keras.layers.Layer):
 
-    def __init__(self,filters, training=True):
+    def __init__(self,filters=True):
         super(Resnet, self).__init__()
         
         self.conv = layers.Conv2D(filters,[3,3],strides=[1,1],padding="same")
-        self.batch_norm = layers.BatchNormalization(training)
+        self.batch_norm = layers.BatchNormalization()
         self.conv2 = layers.Conv2D(filters,[3,3],strides=[1,1],padding="same")
-        self.batch_norm2 = layers.BatchNormalization(training)
+        self.batch_norm2 = layers.BatchNormalization()
 
     def call(self, inputs):
         
@@ -97,5 +115,5 @@ class Resnet(keras.layers.Layer):
         b = tf.nn.relu(b)   #NuevaAdicion       
         c = self.conv2(b)
         x = self.batch_norm2(c)
-        return tf.nn.relu(x + inputs)
+        return tf.nn.relu(inputs + x)
 

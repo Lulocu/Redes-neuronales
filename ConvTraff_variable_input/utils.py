@@ -1,11 +1,14 @@
-from __future__ import print_function
-from __future__ import division
-
+import tensorflow as tf
 import numpy as np
-
+import matplotlib.pyplot as plt
 import csv
 import os
 import pickle
+from enum import IntEnum
+from tensorflow import keras
+import datetime
+from memory_profiler import profile
+
 
 
 def get_dataset_name(time_window, time_aggregation, forecast_window, forecast_aggregation, train_set_size,
@@ -16,6 +19,7 @@ def get_dataset_name(time_window, time_aggregation, forecast_window, forecast_ag
     pickle_filename += str(forecast_window) + '_'
     pickle_filename += str(forecast_aggregation) + '_'
     pickle_filename += str(train_set_size) + '_'
+    pickle_filename += 'norm' + '_'
     pickle_filename += str(valid_set_size) + '.pickle'
 
     return pickle_filename
@@ -82,8 +86,8 @@ def get_dataset(pickle_filename, args, parser):
             valid_labels2 = save['valid_labels2']
             test_set = save['test_set']
             test_labels = save['test_labels']
-            mean = save['mean']
-            stddev = save['stddev']
+            #mean = save['mean']
+            #stddev = save['stddev']
             f.close()
 
         train_set = np.load('train_set.npy')
@@ -132,8 +136,8 @@ def get_dataset(pickle_filename, args, parser):
         test_set = np.asarray(test_set)
         test_labels = np.asarray(test_labels)
 
-        mean = np.mean(dataset, axis=(0, 1, 2))
-        stddev = np.std(dataset, axis=(0, 1, 2))
+        #mean = np.mean(dataset, axis=(0, 1, 2))
+        #stddev = np.std(dataset, axis=(0, 1, 2))
 
         train_set = dataset[:args.train_set_size]
         train_labels = labels[:args.train_set_size]
@@ -153,8 +157,8 @@ def get_dataset(pickle_filename, args, parser):
             'valid_labels2': valid_labels2,
             'test_set': test_set,
             'test_labels': test_labels,
-            'mean': mean,
-            'stddev': stddev
+            #'mean': mean,
+            #'stddev': stddev
         }
 
         f = open(pickle_filename, 'wb')
@@ -165,21 +169,70 @@ def get_dataset(pickle_filename, args, parser):
         np.save('train_labels.npy', train_labels)
 
     del save
-    return (train_set, train_labels, valid_set, valid_labels, valid_set2, valid_labels2, test_set, test_labels, mean,
-            stddev)
+    return (train_set, train_labels, valid_set, valid_labels, valid_set2, valid_labels2, test_set, test_labels)#,# mean,
+           # stddev)
+            
+class traff_var(IntEnum):
+    FLOW = 0
+    OCCUPANCY = 1
+    SPEED = 2
 
+def l2loss(y_true, y_pred):
+    return tf.nn.l2_loss(y_pred - y_true)
 
-def MAE(labels, prediction):
-    return np.mean(np.absolute(labels - prediction))
+@profile
+def compile_and_fit(model, train_set,train_labels,valid_set, valid_labels, initial_learning_rate, decay_steps, 
+            decay_rate,gradient_clip,batch, max_epochs = 20):
 
+    log_dir = "logs/fit/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+    tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir, histogram_freq=1,
+        write_images=True, write_steps_per_second=True,embeddings_freq=1)
 
-def MAPE(labels, prediction):
-    return (np.mean(np.absolute(labels - prediction) / labels)) * 100
+    csv_logger = keras.callbacks.CSVLogger('logs/ConvTraff_variable_input.csv',append =True)
 
+    checkpoint_filepath = 'savedModel/'
+    model_checkpoint_callback = tf.keras.callbacks.ModelCheckpoint(
+        filepath=checkpoint_filepath,
+        save_weights_only=False,
+        monitor='l2_loss',
+        mode='auto',
+        save_freq='epoch',
+        save_best_only=False)
 
-def MSE(labels, prediction):
-    return np.mean(np.square(labels - prediction))
+    learning_rate = tf.keras.optimizers.schedules.ExponentialDecay(
+        initial_learning_rate, decay_steps, decay_rate, staircase=True)
 
+    model.compile(loss=l2loss,#tf.losses.MeanAbsoluteError(),
+                    optimizer= keras.optimizers.SGD(learning_rate,clipnorm = gradient_clip,momentum = 0.9),
+                    metrics=[tf.keras.metrics.MeanAbsoluteError(), 
+                    tf.keras.metrics.MeanAbsolutePercentageError(),
+                    tf.keras.metrics.MeanSquaredError(),
+                    tf.keras.metrics.RootMeanSquaredError()])
 
-def RMSE(labels, prediction):
-    return np.sqrt(MSE(labels, prediction))
+    history = model.fit(train_set,train_labels,validation_data = (valid_set, valid_labels), 
+        batch_size = batch, epochs= max_epochs,shuffle=True,verbose =2,
+        callbacks=[csv_logger])#,callbacks=[tensorboard_callback]) #, callbacks=[model_checkpoint_callback]
+    return history
+
+def plot_history(history):
+
+    hist = history.history
+    epochs = history.epoch
+    for metric in hist.keys():
+        plt.plot(epochs,hist[metric],marker='o', linestyle='--', color='r', label=metric)
+        
+        plt.title('Training ' + metric)
+        plt.legend()
+        plt.xticks(epochs,epochs)
+        plt.show()
+
+def plot_prediction(real_data, prediction):
+
+    for i in range(real_data.shape[-1]):
+        plt.plot(range(len(real_data[:,i])),real_data[:,i].flatten(),marker='o', linestyle='--', color='r', label="real data")
+        plt.plot(range(len(prediction[:,i])),prediction[:,i].flatten(),marker='o', linestyle='-.', color='b', label="prediction")
+        plt.title('Compare prediction and real ground on instant' + str(i))
+        plt.legend()
+        plt.xticks(range(len(real_data)))
+        plt.savefig('Images/ConvTraff_variable_input/Grafica' + str(i) + '.png')
+        
