@@ -1,12 +1,8 @@
 from tensorflow.keras import backend
 import argparse
 import tensorflow as tf
-import csv
 import utils
 import model
-import os
-import numpy as np
-import matplotlib.pyplot as plt
 
 parser = argparse.ArgumentParser(description='Trains a convolutional network for traffic prediction.')
 files_group = parser.add_argument_group('Data files')
@@ -29,7 +25,7 @@ training_group.add_argument('-ts', '--train_set_size', default=70000, type=int, 
 training_group.add_argument('-vs', '--valid_set_size', default=30000, type=int, help='validation set size')
 training_group.add_argument('-vp', '--valid_partitions', default=100, type=int, help='validation set partitions number')
 training_group.add_argument('-tp', '--test_partitions', default=100, type=int, help='test set partitions number')
-training_group.add_argument('-b', '--batch_size', default=50, type=int, help='batch size for SGD')
+training_group.add_argument('-b', '--batch_size', default=70, type=int, help='batch size for SGD')
 training_group.add_argument('-l', '--learning_rate', default=1e-4, type=float, help='learning rate for SGD')
 training_group.add_argument('-dr', '--decay_rate', default=0.1, type=float, help='learning rate decay rate')
 training_group.add_argument('-ds', '--decay-steps', default=1000, type=int, help='learning rate decay steps')
@@ -85,7 +81,7 @@ history = utils.compile_and_fit(conv_model,train_set,train_labels, valid_set, va
             decay_rate = args.decay_rate,gradient_clip =args.gradient_clip,max_epochs=args.epochs,
             batch=args.batch_size)
 
-eval = conv_model.evaluate(x=test_set, y = test_labels,batch_size=args.epochs, verbose =2)
+eval = conv_model.evaluate(x=test_set, y = test_labels,batch_size=args.batch_size, verbose =2)
 pred   = conv_model.predict(test_set)
 
 
@@ -101,7 +97,8 @@ tf.keras.utils.plot_model(
 
 
 #utils.plot_history(history)
-utils.plot_prediction(test_labels[150:200], pred[150:200])
+utils.plot_prediction(test_labels[150:200], pred[150:200],train_set.shape,valid_set.shape)
+
 
 print('Evaluation in test_set:')
 print(eval)

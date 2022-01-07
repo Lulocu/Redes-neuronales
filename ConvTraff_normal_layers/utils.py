@@ -19,6 +19,7 @@ def get_dataset_name(time_window, time_aggregation, forecast_window, forecast_ag
     pickle_filename += str(forecast_window) + '_'
     pickle_filename += str(forecast_aggregation) + '_'
     pickle_filename += str(train_set_size) + '_'
+    pickle_filename += 'norm' + '_'
     pickle_filename += str(valid_set_size) + '.pickle'
 
     return pickle_filename
@@ -85,8 +86,8 @@ def get_dataset(pickle_filename, args, parser):
             valid_labels2 = save['valid_labels2']
             test_set = save['test_set']
             test_labels = save['test_labels']
-            mean = save['mean']
-            stddev = save['stddev']
+            #mean = save['mean']
+            #stddev = save['stddev']
             f.close()
 
         train_set = np.load('train_set.npy')
@@ -135,8 +136,8 @@ def get_dataset(pickle_filename, args, parser):
         test_set = np.asarray(test_set)
         test_labels = np.asarray(test_labels)
 
-        mean = np.mean(dataset, axis=(0, 1, 2))
-        stddev = np.std(dataset, axis=(0, 1, 2))
+        #mean = np.mean(dataset, axis=(0, 1, 2))
+        #stddev = np.std(dataset, axis=(0, 1, 2))
 
         train_set = dataset[:args.train_set_size]
         train_labels = labels[:args.train_set_size]
@@ -156,8 +157,8 @@ def get_dataset(pickle_filename, args, parser):
             'valid_labels2': valid_labels2,
             'test_set': test_set,
             'test_labels': test_labels,
-            'mean': mean,
-            'stddev': stddev
+            #'mean': mean,
+            #'stddev': stddev
         }
 
         f = open(pickle_filename, 'wb')
@@ -168,8 +169,8 @@ def get_dataset(pickle_filename, args, parser):
         np.save('train_labels.npy', train_labels)
 
     del save
-    return (train_set, train_labels, valid_set, valid_labels, valid_set2, valid_labels2, test_set, test_labels, mean,
-            stddev)
+    return (train_set, train_labels, valid_set, valid_labels, valid_set2, valid_labels2, test_set, test_labels)#, mean,
+            #stddev)
             
 class traff_var(IntEnum):
     FLOW = 0
@@ -225,7 +226,8 @@ def plot_history(history):
         plt.xticks(epochs,epochs)
         plt.show()
 
-def plot_prediction(real_data, prediction):
+        
+def plot_prediction(real_data, prediction,dataset_len,test_len):
 
     for i in range(real_data.shape[-1]):
         plt.plot(range(len(real_data[:,i])),real_data[:,i].flatten(),marker='o', linestyle='--', color='r', label="real data")
@@ -233,5 +235,4 @@ def plot_prediction(real_data, prediction):
         plt.title('Compare prediction and real ground on instant' + str(i))
         plt.legend()
         plt.xticks(range(len(real_data)))
-        plt.savefig('Images/ConvTraff_normal_layers/Grafica' + str(i) + '.png')
-        
+        plt.savefig('Images/ConvTraff_normal_layers/Grafica'+str(dataset_len)+'_'+str(test_len)+'_' + str(i) + '.png')

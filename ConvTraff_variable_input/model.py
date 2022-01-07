@@ -27,9 +27,9 @@ class ConvTraff(keras.Model):
         self.dense_3 = layers.Dense(output_size, activation=None)
 
         self.avg_pool = layers.GlobalAveragePooling2D()
-        self.padding_1 = layers.Zeropadding_2D([(0,0),(14,15)],data_format= 'channels_first',input_shape =(None,None,None,3))
-        self.padding_2 = layers.Zeropadding_2D([(0,0),(16,16)],data_format= 'channels_first')
-        self.padding_3 = layers.Zeropadding_2D([(0,0),(16,16)],data_format= 'channels_first')
+        self.padding_1 = layers.ZeroPadding2D([(0,0),(14,15)],data_format= 'channels_first',input_shape =(None,None,None,3))
+        self.padding_2 = layers.ZeroPadding2D([(0,0),(16,16)],data_format= 'channels_first')
+        self.padding_3 = layers.ZeroPadding2D([(0,0),(16,16)],data_format= 'channels_first')
 
     def call(self, inputs):
 
@@ -100,7 +100,7 @@ class ConvTraff(keras.Model):
 
 class Resnet(keras.layers.Layer):
 
-    def __init__(self,filters=True):
+    def __init__(self,filters):
         super(Resnet, self).__init__()
         
         self.conv = layers.Conv2D(filters,[3,3],strides=[1,1],padding="same")

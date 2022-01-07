@@ -226,7 +226,8 @@ def plot_history(history):
         plt.xticks(epochs,epochs)
         plt.show()
 
-def plot_prediction(real_data, prediction):
+        
+def plot_prediction(real_data, prediction,dataset_len,test_len):
 
     for i in range(real_data.shape[-1]):
         plt.plot(range(len(real_data[:,i])),real_data[:,i].flatten(),marker='o', linestyle='--', color='r', label="real data")
@@ -234,5 +235,4 @@ def plot_prediction(real_data, prediction):
         plt.title('Compare prediction and real ground on instant' + str(i))
         plt.legend()
         plt.xticks(range(len(real_data)))
-        plt.savefig('Images/ConvTraff_variable_input/Grafica' + str(i) + '.png')
-        
+        plt.savefig('Images/ConvTraff_variable_input/Grafica'+str(dataset_len)+'_'+str(test_len)+'_' + str(i) + '.png')
