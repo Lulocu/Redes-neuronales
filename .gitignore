@@ -139,17 +139,16 @@ datasetsMini/
 .vscode/
 
 #csv
-*.csv
+
 
 #pickle
 *.pickle
 
 #Images
-*.png
 
 *.pickle
 
-*.txt
 
-logs/
+logs/fit/
+logs/evaluate/
 savedModel/
