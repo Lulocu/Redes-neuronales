@@ -1,6 +1,7 @@
 from tensorflow.keras import backend
 import argparse
 import tensorflow as tf
+from tensorflow.python.util.tf_export import ESTIMATOR_API_NAME
 import utils
 import model
 
@@ -73,15 +74,23 @@ test_labels = test_labels[:,args.road_prediction,:,var_pred]
 
 backend.clear_session()
 
+
+#Cargar modelo
 conv_model = model.ConvTraff(args.forecast_window,args.time_window)
 
+conv_model.load_weights('savedModel/ConvTraff_transfer_learning_base/model.7000.ckpt')
 
+#Ver que hacemos con las capas
 history = utils.compile_and_fit(conv_model,train_set,train_labels, valid_set, valid_labels,
             initial_learning_rate = args.learning_rate,decay_steps = args.decay_steps, 
             decay_rate = args.decay_rate,gradient_clip =args.gradient_clip,max_epochs=args.epochs,
             batch=args.batch_size)
 
+
+#Entrenar
 eval = conv_model.evaluate(x=test_set, y = test_labels,batch_size=args.batch_size, verbose =2)
+
+#Evaluar
 pred   = conv_model.predict(test_set)
 
 
@@ -90,7 +99,7 @@ conv_model.build_graph(args.time_window).summary()
 tf.keras.utils.plot_model(
 
     conv_model.build_graph(args.time_window),
-    to_file='Images/model/ConvTraff_variable_input.png', dpi=96,
+    to_file='Images/model/ConvTraff_transfer_learning.png', dpi=96,
     show_shapes=True, show_layer_names=True,
     expand_nested=False
 )
@@ -102,3 +111,4 @@ utils.plot_prediction(test_labels[150:200], pred[150:200],train_set.shape,valid_
 
 print('Evaluation in test_set:')
 print(eval)
+

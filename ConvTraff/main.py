@@ -77,20 +77,19 @@ valid_labels2 = valid_labels2[:,args.road_prediction,:,var_pred]
 test_labels = test_labels[:,args.road_prediction,:,var_pred]
 
 backend.clear_session()
-strategy = tf.distribute.MirroredStrategy()
-with strategy.scope():
-    conv_model = model.ConvTraff(args.forecast_window)
+
+conv_model = model.ConvTraff(args.forecast_window)
 
 
-    history = utils.compile_and_fit(conv_model,train_set,train_labels, valid_set, valid_labels,
-            initial_learning_rate = args.learning_rate,decay_steps = args.decay_steps, 
-            decay_rate = args.decay_rate,gradient_clip =args.gradient_clip,max_epochs=args.epochs,
-            batch=args.batch_size)
+history = utils.compile_and_fit(conv_model,train_set,train_labels, valid_set, valid_labels,
+        initial_learning_rate = args.learning_rate,decay_steps = args.decay_steps, 
+        decay_rate = args.decay_rate,gradient_clip =args.gradient_clip,max_epochs=args.epochs,
+        batch=args.batch_size)
 
 
-    eval = conv_model.evaluate(x=test_set, y = test_labels,batch_size=args.batch_size, verbose =2)
+eval = conv_model.evaluate(x=test_set, y = test_labels,batch_size=args.batch_size, verbose =2)
 
-    pred   = conv_model.predict(test_set)
+pred   = conv_model.predict(test_set)
 
 
 conv_model.build_graph(args.time_window).summary()

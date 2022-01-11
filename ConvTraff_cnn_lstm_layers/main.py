@@ -29,7 +29,7 @@ training_group.add_argument('-b', '--batch_size', default=70, type=int, help='ba
 training_group.add_argument('-l', '--learning_rate', default=1e-4, type=float, help='learning rate for SGD')
 training_group.add_argument('-dr', '--decay_rate', default=0.1, type=float, help='learning rate decay rate')
 training_group.add_argument('-ds', '--decay-steps', default=1000, type=int, help='learning rate decay steps')
-training_group.add_argument('-c', '--gradient_clip', default=10.0, type=float, help='clip at this max norm of gradient')
+training_group.add_argument('-c', '--gradient_clip', default=40.0, type=float, help='clip at this max norm of gradient')
 training_group.add_argument('-m', '--max_steps', default=10000, type=int, help='max number of iterations for training')
 training_group.add_argument('-s', '--save', action='store_true', help='save the model every epoch')
 training_group.add_argument('-ens', '--ensemble', default=1, type=int, help='Number of the model in the ensemble')
@@ -73,7 +73,7 @@ test_labels = test_labels[:,args.road_prediction,:,var_pred]
 
 backend.clear_session()
 
-conv_model = model.ConvTraff(args.forecast_window,args.time_window)
+conv_model = model.ConvTraff(args.forecast_window)
 
 
 history = utils.compile_and_fit(conv_model,train_set,train_labels, valid_set, valid_labels,
@@ -90,7 +90,7 @@ conv_model.build_graph(args.time_window).summary()
 tf.keras.utils.plot_model(
 
     conv_model.build_graph(args.time_window),
-    to_file='Images/model/ConvTraff_variable_input.png', dpi=96,
+    to_file='Images/model/ConvTraff_cnn_lstm_layers.png', dpi=96,
     show_shapes=True, show_layer_names=True,
     expand_nested=False
 )

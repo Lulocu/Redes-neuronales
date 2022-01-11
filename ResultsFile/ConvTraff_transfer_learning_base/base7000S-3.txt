@@ -1,0 +1,139 @@
+Loading dataset from dataset_12_1_1_1_7000_mul_3000.pickle...
+Training set (7000, 27, 12, 3) (7000, 27, 1, 3)
+Validation set (3000, 31, 12, 3) (3000, 31, 1, 3)
+Test set (3000, 31, 12, 3) (3000, 31, 1, 3)
+Building model...
+Epoch 1/20
+100/100 - 191s - loss: 11144545.0000 - mean_absolute_error: 447.5901 - mean_absolute_percentage_error: 60.5840 - mean_squared_error: 318415.6875 - root_mean_squared_error: 564.2833 - val_loss: nan - val_mean_absolute_error: nan - val_mean_absolute_percentage_error: nan - val_mean_squared_error: nan - val_root_mean_squared_error: nan - 191s/epoch - 2s/step
+Epoch 2/20
+100/100 - 182s - loss: 6540418.0000 - mean_absolute_error: 339.7751 - mean_absolute_percentage_error: 53.6767 - mean_squared_error: 186869.1094 - root_mean_squared_error: 432.2836 - val_loss: nan - val_mean_absolute_error: nan - val_mean_absolute_percentage_error: nan - val_mean_squared_error: nan - val_root_mean_squared_error: nan - 182s/epoch - 2s/step
+Epoch 3/20
+100/100 - 182s - loss: 4780616.5000 - mean_absolute_error: 284.8571 - mean_absolute_percentage_error: 38.7994 - mean_squared_error: 136589.0312 - root_mean_squared_error: 369.5795 - val_loss: nan - val_mean_absolute_error: nan - val_mean_absolute_percentage_error: nan - val_mean_squared_error: nan - val_root_mean_squared_error: nan - 182s/epoch - 2s/step
+Epoch 4/20
+100/100 - 182s - loss: 3050089.5000 - mean_absolute_error: 221.0346 - mean_absolute_percentage_error: 29.6718 - mean_squared_error: 87145.3594 - root_mean_squared_error: 295.2039 - val_loss: nan - val_mean_absolute_error: nan - val_mean_absolute_percentage_error: nan - val_mean_squared_error: nan - val_root_mean_squared_error: nan - 182s/epoch - 2s/step
+Epoch 5/20
+100/100 - 182s - loss: 2526776.0000 - mean_absolute_error: 200.4420 - mean_absolute_percentage_error: 26.9067 - mean_squared_error: 72193.5781 - root_mean_squared_error: 268.6886 - val_loss: nan - val_mean_absolute_error: nan - val_mean_absolute_percentage_error: nan - val_mean_squared_error: nan - val_root_mean_squared_error: nan - 182s/epoch - 2s/step
+Epoch 6/20
+100/100 - 179s - loss: 2163973.2500 - mean_absolute_error: 185.5123 - mean_absolute_percentage_error: 23.0188 - mean_squared_error: 61827.8125 - root_mean_squared_error: 248.6520 - val_loss: nan - val_mean_absolute_error: nan - val_mean_absolute_percentage_error: nan - val_mean_squared_error: nan - val_root_mean_squared_error: nan - 179s/epoch - 2s/step
+Epoch 7/20
+100/100 - 181s - loss: 2812682.5000 - mean_absolute_error: 208.6655 - mean_absolute_percentage_error: 23.9724 - mean_squared_error: 80362.3438 - root_mean_squared_error: 283.4825 - val_loss: nan - val_mean_absolute_error: nan - val_mean_absolute_percentage_error: nan - val_mean_squared_error: nan - val_root_mean_squared_error: nan - 181s/epoch - 2s/step
+Epoch 8/20
+100/100 - 178s - loss: 3060425.7500 - mean_absolute_error: 213.2651 - mean_absolute_percentage_error: 24.8802 - mean_squared_error: 87440.7422 - root_mean_squared_error: 295.7038 - val_loss: nan - val_mean_absolute_error: nan - val_mean_absolute_percentage_error: nan - val_mean_squared_error: nan - val_root_mean_squared_error: nan - 178s/epoch - 2s/step
+Epoch 9/20
+100/100 - 187s - loss: 5273441.0000 - mean_absolute_error: 308.2255 - mean_absolute_percentage_error: 34.7200 - mean_squared_error: 150669.7812 - root_mean_squared_error: 388.1620 - val_loss: nan - val_mean_absolute_error: nan - val_mean_absolute_percentage_error: nan - val_mean_squared_error: nan - val_root_mean_squared_error: nan - 187s/epoch - 2s/step
+Epoch 10/20
+100/100 - 181s - loss: 5469937.5000 - mean_absolute_error: 319.7766 - mean_absolute_percentage_error: 36.1284 - mean_squared_error: 156283.9531 - root_mean_squared_error: 395.3277 - val_loss: nan - val_mean_absolute_error: nan - val_mean_absolute_percentage_error: nan - val_mean_squared_error: nan - val_root_mean_squared_error: nan - 181s/epoch - 2s/step
+Epoch 11/20
+100/100 - 180s - loss: 3021267.2500 - mean_absolute_error: 197.8168 - mean_absolute_percentage_error: 23.9898 - mean_squared_error: 86321.8906 - root_mean_squared_error: 293.8059 - val_loss: nan - val_mean_absolute_error: nan - val_mean_absolute_percentage_error: nan - val_mean_squared_error: nan - val_root_mean_squared_error: nan - 180s/epoch - 2s/step
+Epoch 12/20
+100/100 - 181s - loss: 1012417.4375 - mean_absolute_error: 126.0023 - mean_absolute_percentage_error: 16.9619 - mean_squared_error: 28926.2148 - root_mean_squared_error: 170.0771 - val_loss: nan - val_mean_absolute_error: nan - val_mean_absolute_percentage_error: nan - val_mean_squared_error: nan - val_root_mean_squared_error: nan - 181s/epoch - 2s/step
+Epoch 13/20
+100/100 - 181s - loss: 990877.3750 - mean_absolute_error: 125.5621 - mean_absolute_percentage_error: 16.9160 - mean_squared_error: 28310.7832 - root_mean_squared_error: 168.2581 - val_loss: nan - val_mean_absolute_error: nan - val_mean_absolute_percentage_error: nan - val_mean_squared_error: nan - val_root_mean_squared_error: nan - 181s/epoch - 2s/step
+Epoch 14/20
+100/100 - 183s - loss: 769609.1250 - mean_absolute_error: 108.9234 - mean_absolute_percentage_error: 14.6656 - mean_squared_error: 21988.8320 - root_mean_squared_error: 148.2863 - val_loss: nan - val_mean_absolute_error: nan - val_mean_absolute_percentage_error: nan - val_mean_squared_error: nan - val_root_mean_squared_error: nan - 183s/epoch - 2s/step
+Epoch 15/20
+100/100 - 181s - loss: 863879.1875 - mean_absolute_error: 116.1315 - mean_absolute_percentage_error: 15.2465 - mean_squared_error: 24682.2676 - root_mean_squared_error: 157.1059 - val_loss: nan - val_mean_absolute_error: nan - val_mean_absolute_percentage_error: nan - val_mean_squared_error: nan - val_root_mean_squared_error: nan - 181s/epoch - 2s/step
+Epoch 16/20
+100/100 - 183s - loss: 679086.3750 - mean_absolute_error: 101.3041 - mean_absolute_percentage_error: 13.9136 - mean_squared_error: 19402.4688 - root_mean_squared_error: 139.2927 - val_loss: nan - val_mean_absolute_error: nan - val_mean_absolute_percentage_error: nan - val_mean_squared_error: nan - val_root_mean_squared_error: nan - 183s/epoch - 2s/step
+Epoch 17/20
+100/100 - 180s - loss: 776071.6250 - mean_absolute_error: 107.5312 - mean_absolute_percentage_error: 13.8572 - mean_squared_error: 22173.4668 - root_mean_squared_error: 148.9076 - val_loss: nan - val_mean_absolute_error: nan - val_mean_absolute_percentage_error: nan - val_mean_squared_error: nan - val_root_mean_squared_error: nan - 180s/epoch - 2s/step
+Epoch 18/20
+100/100 - 183s - loss: 619597.6250 - mean_absolute_error: 95.7455 - mean_absolute_percentage_error: 12.6585 - mean_squared_error: 17702.7891 - root_mean_squared_error: 133.0518 - val_loss: nan - val_mean_absolute_error: nan - val_mean_absolute_percentage_error: nan - val_mean_squared_error: nan - val_root_mean_squared_error: nan - 183s/epoch - 2s/step
+Epoch 19/20
+100/100 - 182s - loss: 672878.3750 - mean_absolute_error: 99.7350 - mean_absolute_percentage_error: 13.2324 - mean_squared_error: 19225.0996 - root_mean_squared_error: 138.6546 - val_loss: nan - val_mean_absolute_error: nan - val_mean_absolute_percentage_error: nan - val_mean_squared_error: nan - val_root_mean_squared_error: nan - 182s/epoch - 2s/step
+Epoch 20/20
+100/100 - 183s - loss: 629327.6250 - mean_absolute_error: 96.7582 - mean_absolute_percentage_error: 12.7398 - mean_squared_error: 17980.7891 - root_mean_squared_error: 134.0925 - val_loss: nan - val_mean_absolute_error: nan - val_mean_absolute_percentage_error: nan - val_mean_squared_error: nan - val_root_mean_squared_error: nan - 183s/epoch - 2s/step
+Filename: /home/uwicore/Documentos/Redes-neuronales/ConvTraff_transfer_learning_base/utils.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+   183    457.5 MiB    457.5 MiB           1   @profile
+   184                                         def compile_and_fit(model, train_set,train_labels,valid_set, valid_labels, initial_learning_rate, decay_steps, 
+   185                                                     decay_rate,gradient_clip,batch, max_epochs = 20):
+   186                                         
+   187    457.5 MiB      0.0 MiB           1       log_dir = "logs/fit/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+   188    457.5 MiB      0.0 MiB           2       tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir, histogram_freq=1,
+   189    457.5 MiB      0.0 MiB           1           write_images=True, write_steps_per_second=True,embeddings_freq=1)
+   190                                         
+   191    457.5 MiB      0.0 MiB           1       csv_logger = keras.callbacks.CSVLogger('logs/ConvTraff_transfer_learning_base.csv',append =True)
+   192                                         
+   193    457.5 MiB      0.0 MiB           1       checkpoint_filepath = 'savedModel/ConvTraff_transfer_learning_base/model.{epoch:02d}.ckpt'
+   194    457.5 MiB      0.0 MiB           2       model_checkpoint_callback = tf.keras.callbacks.ModelCheckpoint(
+   195    457.5 MiB      0.0 MiB           1           filepath=checkpoint_filepath,
+   196    457.5 MiB      0.0 MiB           1           save_weights_only=False,
+   197    457.5 MiB      0.0 MiB           1           monitor='mean_absolute_percentage_error',
+   198    457.5 MiB      0.0 MiB           1           mode='auto',
+   199    457.5 MiB      0.0 MiB           1           save_freq='epoch',
+   200    457.5 MiB      0.0 MiB           1           save_best_only=False)
+   201                                         
+   202    457.5 MiB      0.0 MiB           2       learning_rate = tf.keras.optimizers.schedules.ExponentialDecay(
+   203    457.5 MiB      0.0 MiB           1           initial_learning_rate, decay_steps, decay_rate, staircase=True)
+   204                                         
+   205    458.6 MiB      0.3 MiB           2       model.compile(loss=l2loss,#¡tf.losses.MeanAbsoluteError(),
+   206    457.5 MiB      0.0 MiB           1                       optimizer= keras.optimizers.SGD(learning_rate,clipvalue = gradient_clip,momentum = 0.9),
+   207    458.3 MiB      0.8 MiB           2                       metrics=[tf.keras.metrics.MeanAbsoluteError(), 
+   208    458.3 MiB      0.0 MiB           1                       tf.keras.metrics.MeanAbsolutePercentageError(),
+   209    458.3 MiB      0.0 MiB           1                       tf.keras.metrics.MeanSquaredError(),
+   210    458.3 MiB      0.0 MiB           1                       tf.keras.metrics.RootMeanSquaredError()])
+   211                                         
+   212   1591.6 MiB   1133.1 MiB           2       history = model.fit(train_set,train_labels,validation_data = (valid_set, valid_labels), 
+   213    458.6 MiB      0.0 MiB           1           batch_size = batch, epochs= max_epochs,shuffle=True,verbose =2,
+   214    458.6 MiB      0.0 MiB           1           callbacks=[csv_logger])#,callbacks=[tensorboard_callback]) #, callbacks=[model_checkpoint_callback]
+   215   1591.6 MiB      0.0 MiB           1       return history
+
+
+43/43 - 13s - loss: 2602290.0000 - mean_absolute_error: 233.7375 - mean_absolute_percentage_error: 59.3819 - mean_squared_error: 74504.9844 - root_mean_squared_error: 272.9560 - 13s/epoch - 300ms/step
+Model: "model"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ input_2 (InputLayer)        [(None, None, 12, 3)]     0         
+                                                                 
+ batch_normalization (BatchN  (None, None, 12, 3)      12        
+ ormalization)                                                   
+                                                                 
+ zero_padding2d (ZeroPadding  (None, None, 12, 32)     0         
+ 2D)                                                             
+                                                                 
+ resnet (Resnet)             (None, None, 12, 32)      18752     
+                                                                 
+ resnet_1 (Resnet)           (None, None, 12, 32)      18752     
+                                                                 
+ resnet_2 (Resnet)           (None, None, 12, 32)      18752     
+                                                                 
+ zero_padding2d_1 (ZeroPaddi  (None, None, 12, 64)     0         
+ ng2D)                                                           
+                                                                 
+ resnet_3 (Resnet)           (None, None, 12, 64)      74368     
+                                                                 
+ resnet_4 (Resnet)           (None, None, 12, 64)      74368     
+                                                                 
+ resnet_5 (Resnet)           (None, None, 12, 64)      74368     
+                                                                 
+ zero_padding2d_2 (ZeroPaddi  (None, None, 12, 96)     0         
+ ng2D)                                                           
+                                                                 
+ resnet_6 (Resnet)           (None, None, 12, 96)      166848    
+                                                                 
+ resnet_7 (Resnet)           (None, None, 12, 96)      166848    
+                                                                 
+ resnet_8 (Resnet)           (None, None, 12, 96)      166848    
+                                                                 
+ global_average_pooling2d (G  (None, 96)               0         
+ lobalAveragePooling2D)                                          
+                                                                 
+ dense (Dense)               (None, 2048)              198656    
+                                                                 
+ dropout (Dropout)           (None, 2048)              0         
+                                                                 
+ dense_1 (Dense)             (None, 1024)              2098176   
+                                                                 
+ dense_2 (Dense)             (None, 1)                 1025      
+                                                                 
+=================================================================
+Total params: 3,077,773
+Trainable params: 3,075,463
+Non-trainable params: 2,310
+_________________________________________________________________
+Evaluation in test_set:
+[2602290.0, 233.7375030517578, 59.38191604614258, 74504.984375, 272.9560241699219]

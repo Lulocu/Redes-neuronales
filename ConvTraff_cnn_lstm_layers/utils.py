@@ -19,7 +19,7 @@ def get_dataset_name(time_window, time_aggregation, forecast_window, forecast_ag
     pickle_filename += str(forecast_window) + '_'
     pickle_filename += str(forecast_aggregation) + '_'
     pickle_filename += str(train_set_size) + '_'
-    pickle_filename += 'mul' + '_'
+    pickle_filename += 'norm' + '_'
     pickle_filename += str(valid_set_size) + '.pickle'
 
     return pickle_filename
@@ -169,8 +169,8 @@ def get_dataset(pickle_filename, args, parser):
         np.save('train_labels.npy', train_labels)
 
     del save
-    return (train_set, train_labels, valid_set, valid_labels, valid_set2, valid_labels2, test_set, test_labels)#,# mean,
-           # stddev)
+    return (train_set, train_labels, valid_set, valid_labels, valid_set2, valid_labels2, test_set, test_labels)#, mean,
+            #stddev)
             
 class traff_var(IntEnum):
     FLOW = 0
@@ -188,7 +188,7 @@ def compile_and_fit(model, train_set,train_labels,valid_set, valid_labels, initi
     tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir, histogram_freq=1,
         write_images=True, write_steps_per_second=True,embeddings_freq=1)
 
-    csv_logger = keras.callbacks.CSVLogger('logs/ConvTraff_variable_input_debug.csv',append =True)
+    csv_logger = keras.callbacks.CSVLogger('logs/ConvTraff_cnn_lstm_layers.csv',append =True)
 
     checkpoint_filepath = 'savedModel/'
     model_checkpoint_callback = tf.keras.callbacks.ModelCheckpoint(
@@ -203,7 +203,7 @@ def compile_and_fit(model, train_set,train_labels,valid_set, valid_labels, initi
         initial_learning_rate, decay_steps, decay_rate, staircase=True)
 
     model.compile(loss=l2loss,#tf.losses.MeanAbsoluteError(),
-                    optimizer= keras.optimizers.SGD(learning_rate,clipvalue = gradient_clip,momentum = 0.9),
+                    optimizer= keras.optimizers.SGD(learning_rate,clipnorm = gradient_clip,momentum = 0.9),
                     metrics=[tf.keras.metrics.MeanAbsoluteError(), 
                     tf.keras.metrics.MeanAbsolutePercentageError(),
                     tf.keras.metrics.MeanSquaredError(),
@@ -235,4 +235,4 @@ def plot_prediction(real_data, prediction,dataset_len,test_len):
         plt.title('Compare prediction and real ground on instant' + str(i))
         plt.legend()
         plt.xticks(range(len(real_data)))
-        plt.savefig('Images/ConvTraff_variable_input/Grafica'+str(dataset_len)+'_'+str(test_len)+'_' + str(i) + '.png')
+        plt.savefig('Images/ConvTraff_cnn_lstm_layers/Grafica'+str(dataset_len)+'_'+str(test_len)+'_' + str(i) + '.png')

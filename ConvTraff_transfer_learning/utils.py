@@ -19,7 +19,7 @@ def get_dataset_name(time_window, time_aggregation, forecast_window, forecast_ag
     pickle_filename += str(forecast_window) + '_'
     pickle_filename += str(forecast_aggregation) + '_'
     pickle_filename += str(train_set_size) + '_'
-    pickle_filename += 'mul' + '_'
+    pickle_filename += 'tl' + '_'
     pickle_filename += str(valid_set_size) + '.pickle'
 
     return pickle_filename
@@ -188,13 +188,13 @@ def compile_and_fit(model, train_set,train_labels,valid_set, valid_labels, initi
     tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir, histogram_freq=1,
         write_images=True, write_steps_per_second=True,embeddings_freq=1)
 
-    csv_logger = keras.callbacks.CSVLogger('logs/ConvTraff_variable_input_debug.csv',append =True)
+    csv_logger = keras.callbacks.CSVLogger('logs/ConvTraff_transfer_learning.csv',append =True)
 
-    checkpoint_filepath = 'savedModel/'
+    checkpoint_filepath = 'savedModel/ConvTraff_transfer_learning/model.{epoch:02d}.ckpt'
     model_checkpoint_callback = tf.keras.callbacks.ModelCheckpoint(
         filepath=checkpoint_filepath,
         save_weights_only=False,
-        monitor='l2_loss',
+        monitor='mean_absolute_percentage_error',
         mode='auto',
         save_freq='epoch',
         save_best_only=False)
@@ -202,7 +202,7 @@ def compile_and_fit(model, train_set,train_labels,valid_set, valid_labels, initi
     learning_rate = tf.keras.optimizers.schedules.ExponentialDecay(
         initial_learning_rate, decay_steps, decay_rate, staircase=True)
 
-    model.compile(loss=l2loss,#tf.losses.MeanAbsoluteError(),
+    model.compile(loss=l2loss,#¡tf.losses.MeanAbsoluteError(),
                     optimizer= keras.optimizers.SGD(learning_rate,clipvalue = gradient_clip,momentum = 0.9),
                     metrics=[tf.keras.metrics.MeanAbsoluteError(), 
                     tf.keras.metrics.MeanAbsolutePercentageError(),
@@ -211,7 +211,7 @@ def compile_and_fit(model, train_set,train_labels,valid_set, valid_labels, initi
 
     history = model.fit(train_set,train_labels,validation_data = (valid_set, valid_labels), 
         batch_size = batch, epochs= max_epochs,shuffle=True,verbose =2,
-        callbacks=[csv_logger])#,callbacks=[tensorboard_callback]) #, callbacks=[model_checkpoint_callback]
+        callbacks=[csv_logger])#,model_checkpoint_callback])#,callbacks=[tensorboard_callback]) #, callbacks=[model_checkpoint_callback]
     return history
 
 def plot_history(history):
@@ -235,4 +235,4 @@ def plot_prediction(real_data, prediction,dataset_len,test_len):
         plt.title('Compare prediction and real ground on instant' + str(i))
         plt.legend()
         plt.xticks(range(len(real_data)))
-        plt.savefig('Images/ConvTraff_variable_input/Grafica'+str(dataset_len)+'_'+str(test_len)+'_' + str(i) + '.png')
+        plt.savefig('Images/ConvTraff_transfer_learning/Grafica'+str(dataset_len)+'_'+str(test_len)+'_' + str(i) + '.png')

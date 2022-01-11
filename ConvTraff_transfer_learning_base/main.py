@@ -84,13 +84,15 @@ history = utils.compile_and_fit(conv_model,train_set,train_labels, valid_set, va
 eval = conv_model.evaluate(x=test_set, y = test_labels,batch_size=args.batch_size, verbose =2)
 pred   = conv_model.predict(test_set)
 
+checkpoint_filepath = 'savedModel/ConvTraff_transfer_learning_base/model.'+ str(args.train_set_size) +'.ckpt'
+conv_model.save_weights(checkpoint_filepath)
 
 conv_model.build_graph(args.time_window).summary()
 
 tf.keras.utils.plot_model(
 
     conv_model.build_graph(args.time_window),
-    to_file='Images/model/ConvTraff_variable_input.png', dpi=96,
+    to_file='Images/model/ConvTraff_transfer_learning_base.png', dpi=96,
     show_shapes=True, show_layer_names=True,
     expand_nested=False
 )
