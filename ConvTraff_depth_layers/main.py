@@ -3,6 +3,8 @@ import argparse
 import tensorflow as tf
 import utils
 import model
+import csv
+
 
 parser = argparse.ArgumentParser(description='Trains a convolutional network for traffic prediction.')
 files_group = parser.add_argument_group('Data files')
@@ -102,3 +104,10 @@ utils.plot_prediction(test_labels[150:200], pred[150:200],train_set.shape,valid_
 
 print('Evaluation in test_set:')
 print(eval)
+
+with open('datosGraf.csv', 'a') as f:
+    # create the csv writer
+    writer = csv.writer(f)
+
+    # write a row to the csv file
+    writer.writerow(['Depth_layers',pred[150:200]])

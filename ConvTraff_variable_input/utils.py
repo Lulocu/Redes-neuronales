@@ -19,7 +19,7 @@ def get_dataset_name(time_window, time_aggregation, forecast_window, forecast_ag
     pickle_filename += str(forecast_window) + '_'
     pickle_filename += str(forecast_aggregation) + '_'
     pickle_filename += str(train_set_size) + '_'
-    pickle_filename += 'mul' + '_'
+    pickle_filename += 'norm' + '_'
     pickle_filename += str(valid_set_size) + '.pickle'
 
     return pickle_filename
@@ -90,8 +90,8 @@ def get_dataset(pickle_filename, args, parser):
             #stddev = save['stddev']
             f.close()
 
-        train_set = np.load('train_set.npy')
-        train_labels = np.load('train_labels.npy')
+        train_set = np.load('train_set_norm.npy')
+        train_labels = np.load('train_labels_norm.npy')
     else:
         if args.datasets is None or args.test_set is None:
             print('Dataset not found. You must give dataset and test set arguments from command line.')
@@ -165,8 +165,8 @@ def get_dataset(pickle_filename, args, parser):
         pickle.dump(save, f, pickle.HIGHEST_PROTOCOL)
         f.close()
 
-        np.save('train_set.npy', train_set)
-        np.save('train_labels.npy', train_labels)
+        np.save('train_set_norm.npy', train_set)
+        np.save('train_labels_norm.npy', train_labels)
 
     del save
     return (train_set, train_labels, valid_set, valid_labels, valid_set2, valid_labels2, test_set, test_labels)#,# mean,
@@ -180,7 +180,7 @@ class traff_var(IntEnum):
 def l2loss(y_true, y_pred):
     return tf.nn.l2_loss(y_pred - y_true)
 
-@profile
+
 def compile_and_fit(model, train_set,train_labels,valid_set, valid_labels, initial_learning_rate, decay_steps, 
             decay_rate,gradient_clip,batch, max_epochs = 20):
 

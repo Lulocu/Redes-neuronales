@@ -93,17 +93,36 @@ class Resnet(keras.layers.Layer):
     def __init__(self,filters):
         super(Resnet, self).__init__()
         
-        self.conv = layers.Conv2D(filters,[3,3],strides=[1,1],padding="same",data_format='channels_last')
-        self.batch_norm = layers.BatchNormalization(axis=-1)
-        self.conv2 = layers.Conv2D(filters,[3,3],strides=[1,1],padding="same",data_format='channels_last')
-        self.batch_norm2 = layers.BatchNormalization(axis=-1)
+        self.conv = layers.Conv2D(filters,[3,3],strides=[1,1],padding="same")
+        self.batch_norm = layers.BatchNormalization()
+        self.conv2 = layers.Conv2D(filters,[3,3],strides=[1,1],padding="same")
+        self.batch_norm2 = layers.BatchNormalization()
+        self.sum = layers.Add()
+        self.relu1 = layers.ReLU()
+        self.relu2 = layers.ReLU()
 
     def call(self, inputs):
         
         a = self.conv(inputs)
         b = self.batch_norm(a)
-        c = tf.nn.relu(b)   #NuevaAdicion       
-        d = self.conv2(c)
-        x = self.batch_norm2(d)
-        return tf.nn.relu(inputs+x)
+        b = self.relu1(b)
+        c = self.conv2(b)
+        d = self.batch_norm2(c)
+        e = self.sum([d,inputs])
+        f = self.relu2(e)
+        return f
 
+    def get_config(self):
+        config = super(Resnet, self).get_config()
+        config.update({
+                       "conv": self.conv,
+                       "batch_norm": self.batch_norm,
+                       "conv2": self.conv2,
+                       "batch_norm2": self.batch_norm2,
+                       "sum": self.sum,
+                       "relu1": self.relu1,
+                       "relu2": self.relu2,
+                       })
+
+
+        return config

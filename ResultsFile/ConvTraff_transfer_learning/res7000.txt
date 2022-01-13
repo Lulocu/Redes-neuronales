@@ -1,88 +1,49 @@
-Loading dataset from dataset_12_1_1_1_7000_tl_3000.pickle...
-Training set (7000, 27, 12, 3) (7000, 27, 1, 3)
-Validation set (3000, 27, 12, 3) (3000, 27, 1, 3)
-Test set (3000, 27, 12, 3) (3000, 27, 1, 3)
+Loading dataset from dataset_12_1_1_1_10000_norm_3000.pickle...
+Training set (10000, 31, 12, 3) (10000, 31, 1, 3)
+Validation set (3000, 31, 12, 3) (3000, 31, 1, 3)
+Test set (3000, 31, 12, 3) (3000, 31, 1, 3)
 Building model...
 Epoch 1/20
-100/100 - 206s - loss: 544177.8125 - mean_absolute_error: 90.0142 - mean_absolute_percentage_error: 12.7689 - mean_squared_error: 15547.9385 - root_mean_squared_error: 124.6914 - val_loss: 396338.1250 - val_mean_absolute_error: 75.0023 - val_mean_absolute_percentage_error: 9.5908 - val_mean_squared_error: 11345.6055 - val_root_mean_squared_error: 106.5158 - 206s/epoch - 2s/step
+143/143 - 192s - loss: 2325678.5000 - mean_absolute_error: 178.2954 - mean_absolute_percentage_error: 43.3790 - mean_squared_error: 66463.1719 - root_mean_squared_error: 257.8045 - val_loss: nan - val_mean_absolute_error: nan - val_mean_absolute_percentage_error: nan - val_mean_squared_error: nan - val_root_mean_squared_error: nan - 192s/epoch - 1s/step
 Epoch 2/20
-100/100 - 183s - loss: 520489.8750 - mean_absolute_error: 86.4247 - mean_absolute_percentage_error: 11.6786 - mean_squared_error: 14871.1357 - root_mean_squared_error: 121.9473 - val_loss: 369772.1875 - val_mean_absolute_error: 72.8655 - val_mean_absolute_percentage_error: 9.2858 - val_mean_squared_error: 10587.8770 - val_root_mean_squared_error: 102.8974 - 183s/epoch - 2s/step
+143/143 - 181s - loss: 655382.7500 - mean_absolute_error: 96.6738 - mean_absolute_percentage_error: 20.7063 - mean_squared_error: 18735.0508 - root_mean_squared_error: 136.8760 - val_loss: nan - val_mean_absolute_error: nan - val_mean_absolute_percentage_error: nan - val_mean_squared_error: nan - val_root_mean_squared_error: nan - 181s/epoch - 1s/step
 Epoch 3/20
-100/100 - 181s - loss: 514559.5938 - mean_absolute_error: 85.6349 - mean_absolute_percentage_error: 11.3900 - mean_squared_error: 14701.7051 - root_mean_squared_error: 121.2506 - val_loss: 368316.0000 - val_mean_absolute_error: 72.6556 - val_mean_absolute_percentage_error: 9.3596 - val_mean_squared_error: 10546.4629 - val_root_mean_squared_error: 102.6960 - 181s/epoch - 2s/step
+143/143 - 180s - loss: 649385.8750 - mean_absolute_error: 96.6778 - mean_absolute_percentage_error: 20.4320 - mean_squared_error: 18570.3145 - root_mean_squared_error: 136.2729 - val_loss: nan - val_mean_absolute_error: nan - val_mean_absolute_percentage_error: nan - val_mean_squared_error: nan - val_root_mean_squared_error: nan - 180s/epoch - 1s/step
 Epoch 4/20
-100/100 - 178s - loss: 514239.3125 - mean_absolute_error: 85.9689 - mean_absolute_percentage_error: 11.8239 - mean_squared_error: 14692.5459 - root_mean_squared_error: 121.2128 - val_loss: 385124.0938 - val_mean_absolute_error: 74.7533 - val_mean_absolute_percentage_error: 9.3923 - val_mean_squared_error: 11030.7480 - val_root_mean_squared_error: 105.0274 - 178s/epoch - 2s/step
+143/143 - 180s - loss: 621202.0625 - mean_absolute_error: 94.1054 - mean_absolute_percentage_error: 19.5183 - mean_squared_error: 17764.8555 - root_mean_squared_error: 133.2849 - val_loss: nan - val_mean_absolute_error: nan - val_mean_absolute_percentage_error: nan - val_mean_squared_error: nan - val_root_mean_squared_error: nan - 180s/epoch - 1s/step
 Epoch 5/20
-100/100 - 174s - loss: 497498.8438 - mean_absolute_error: 84.1659 - mean_absolute_percentage_error: 11.1630 - mean_squared_error: 14214.2539 - root_mean_squared_error: 119.2235 - val_loss: 378721.6562 - val_mean_absolute_error: 73.5573 - val_mean_absolute_percentage_error: 9.4724 - val_mean_squared_error: 10841.3066 - val_root_mean_squared_error: 104.1216 - 174s/epoch - 2s/step
+143/143 - 180s - loss: 618464.7500 - mean_absolute_error: 94.4532 - mean_absolute_percentage_error: 20.5676 - mean_squared_error: 17686.2129 - root_mean_squared_error: 132.9895 - val_loss: nan - val_mean_absolute_error: nan - val_mean_absolute_percentage_error: nan - val_mean_squared_error: nan - val_root_mean_squared_error: nan - 180s/epoch - 1s/step
 Epoch 6/20
-100/100 - 181s - loss: 502330.5000 - mean_absolute_error: 84.6372 - mean_absolute_percentage_error: 11.5554 - mean_squared_error: 14352.3037 - root_mean_squared_error: 119.8011 - val_loss: 386559.3750 - val_mean_absolute_error: 74.8549 - val_mean_absolute_percentage_error: 9.3840 - val_mean_squared_error: 11071.8057 - val_root_mean_squared_error: 105.2226 - 181s/epoch - 2s/step
+143/143 - 182s - loss: 602797.0625 - mean_absolute_error: 92.9667 - mean_absolute_percentage_error: 20.0353 - mean_squared_error: 17238.9082 - root_mean_squared_error: 131.2970 - val_loss: nan - val_mean_absolute_error: nan - val_mean_absolute_percentage_error: nan - val_mean_squared_error: nan - val_root_mean_squared_error: nan - 182s/epoch - 1s/step
 Epoch 7/20
-100/100 - 174s - loss: 514157.0312 - mean_absolute_error: 85.9343 - mean_absolute_percentage_error: 11.4309 - mean_squared_error: 14690.2041 - root_mean_squared_error: 121.2032 - val_loss: 378721.3125 - val_mean_absolute_error: 73.9581 - val_mean_absolute_percentage_error: 9.2795 - val_mean_squared_error: 10846.7451 - val_root_mean_squared_error: 104.1477 - 174s/epoch - 2s/step
+143/143 - 181s - loss: 590008.8750 - mean_absolute_error: 92.7917 - mean_absolute_percentage_error: 20.6854 - mean_squared_error: 16882.4766 - root_mean_squared_error: 129.9326 - val_loss: nan - val_mean_absolute_error: nan - val_mean_absolute_percentage_error: nan - val_mean_squared_error: nan - val_root_mean_squared_error: nan - 181s/epoch - 1s/step
 Epoch 8/20
-100/100 - 181s - loss: 501592.4375 - mean_absolute_error: 85.2673 - mean_absolute_percentage_error: 11.3599 - mean_squared_error: 14331.2139 - root_mean_squared_error: 119.7131 - val_loss: 366522.2500 - val_mean_absolute_error: 72.3856 - val_mean_absolute_percentage_error: 9.3171 - val_mean_squared_error: 10493.6914 - val_root_mean_squared_error: 102.4387 - 181s/epoch - 2s/step
+143/143 - 181s - loss: 578233.8125 - mean_absolute_error: 91.4508 - mean_absolute_percentage_error: 20.1649 - mean_squared_error: 16531.7363 - root_mean_squared_error: 128.5758 - val_loss: nan - val_mean_absolute_error: nan - val_mean_absolute_percentage_error: nan - val_mean_squared_error: nan - val_root_mean_squared_error: nan - 181s/epoch - 1s/step
 Epoch 9/20
-100/100 - 181s - loss: 515230.5625 - mean_absolute_error: 85.8476 - mean_absolute_percentage_error: 11.5158 - mean_squared_error: 14720.8770 - root_mean_squared_error: 121.3296 - val_loss: 382313.3438 - val_mean_absolute_error: 74.5780 - val_mean_absolute_percentage_error: 9.3699 - val_mean_squared_error: 10948.3867 - val_root_mean_squared_error: 104.6345 - 181s/epoch - 2s/step
+143/143 - 181s - loss: 561242.5625 - mean_absolute_error: 89.7240 - mean_absolute_percentage_error: 19.6662 - mean_squared_error: 16052.2510 - root_mean_squared_error: 126.6975 - val_loss: nan - val_mean_absolute_error: nan - val_mean_absolute_percentage_error: nan - val_mean_squared_error: nan - val_root_mean_squared_error: nan - 181s/epoch - 1s/step
 Epoch 10/20
-100/100 - 182s - loss: 486799.0625 - mean_absolute_error: 83.3091 - mean_absolute_percentage_error: 11.0661 - mean_squared_error: 13908.5459 - root_mean_squared_error: 117.9345 - val_loss: 365962.1562 - val_mean_absolute_error: 72.6733 - val_mean_absolute_percentage_error: 9.4810 - val_mean_squared_error: 10480.0254 - val_root_mean_squared_error: 102.3720 - 182s/epoch - 2s/step
+143/143 - 181s - loss: 559313.4375 - mean_absolute_error: 89.9794 - mean_absolute_percentage_error: 20.0779 - mean_squared_error: 15987.2354 - root_mean_squared_error: 126.4406 - val_loss: nan - val_mean_absolute_error: nan - val_mean_absolute_percentage_error: nan - val_mean_squared_error: nan - val_root_mean_squared_error: nan - 181s/epoch - 1s/step
 Epoch 11/20
-100/100 - 183s - loss: 476724.3750 - mean_absolute_error: 82.4382 - mean_absolute_percentage_error: 11.4288 - mean_squared_error: 13620.7021 - root_mean_squared_error: 116.7078 - val_loss: 372768.5938 - val_mean_absolute_error: 73.1736 - val_mean_absolute_percentage_error: 9.5157 - val_mean_squared_error: 10670.4316 - val_root_mean_squared_error: 103.2978 - 183s/epoch - 2s/step
+143/143 - 181s - loss: 559292.0000 - mean_absolute_error: 89.4892 - mean_absolute_percentage_error: 19.5149 - mean_squared_error: 15989.7100 - root_mean_squared_error: 126.4504 - val_loss: nan - val_mean_absolute_error: nan - val_mean_absolute_percentage_error: nan - val_mean_squared_error: nan - val_root_mean_squared_error: nan - 181s/epoch - 1s/step
 Epoch 12/20
-100/100 - 183s - loss: 478993.0000 - mean_absolute_error: 81.8712 - mean_absolute_percentage_error: 10.9231 - mean_squared_error: 13685.5166 - root_mean_squared_error: 116.9851 - val_loss: 364908.1250 - val_mean_absolute_error: 72.2910 - val_mean_absolute_percentage_error: 9.3269 - val_mean_squared_error: 10446.5439 - val_root_mean_squared_error: 102.2083 - 183s/epoch - 2s/step
+143/143 - 181s - loss: 550804.4375 - mean_absolute_error: 89.0179 - mean_absolute_percentage_error: 19.4046 - mean_squared_error: 15747.5869 - root_mean_squared_error: 125.4894 - val_loss: nan - val_mean_absolute_error: nan - val_mean_absolute_percentage_error: nan - val_mean_squared_error: nan - val_root_mean_squared_error: nan - 181s/epoch - 1s/step
 Epoch 13/20
-100/100 - 182s - loss: 487974.9062 - mean_absolute_error: 83.4809 - mean_absolute_percentage_error: 11.5385 - mean_squared_error: 13942.1387 - root_mean_squared_error: 118.0768 - val_loss: 367535.6875 - val_mean_absolute_error: 72.5749 - val_mean_absolute_percentage_error: 9.3982 - val_mean_squared_error: 10521.2148 - val_root_mean_squared_error: 102.5730 - 182s/epoch - 2s/step
+143/143 - 181s - loss: 558227.0000 - mean_absolute_error: 89.5358 - mean_absolute_percentage_error: 19.6391 - mean_squared_error: 15961.8574 - root_mean_squared_error: 126.3402 - val_loss: nan - val_mean_absolute_error: nan - val_mean_absolute_percentage_error: nan - val_mean_squared_error: nan - val_root_mean_squared_error: nan - 181s/epoch - 1s/step
 Epoch 14/20
-100/100 - 182s - loss: 486584.7812 - mean_absolute_error: 83.0782 - mean_absolute_percentage_error: 11.3601 - mean_squared_error: 13902.4238 - root_mean_squared_error: 117.9085 - val_loss: 364163.9688 - val_mean_absolute_error: 72.2361 - val_mean_absolute_percentage_error: 9.3292 - val_mean_squared_error: 10425.4082 - val_root_mean_squared_error: 102.1049 - 182s/epoch - 2s/step
+143/143 - 181s - loss: 546511.5625 - mean_absolute_error: 89.2229 - mean_absolute_percentage_error: 20.0541 - mean_squared_error: 15628.8066 - root_mean_squared_error: 125.0152 - val_loss: nan - val_mean_absolute_error: nan - val_mean_absolute_percentage_error: nan - val_mean_squared_error: nan - val_root_mean_squared_error: nan - 181s/epoch - 1s/step
 Epoch 15/20
-100/100 - 182s - loss: 470919.9062 - mean_absolute_error: 81.9997 - mean_absolute_percentage_error: 11.0319 - mean_squared_error: 13454.8535 - root_mean_squared_error: 115.9951 - val_loss: 370389.7500 - val_mean_absolute_error: 72.8145 - val_mean_absolute_percentage_error: 9.3832 - val_mean_squared_error: 10602.7939 - val_root_mean_squared_error: 102.9699 - 182s/epoch - 2s/step
+143/143 - 181s - loss: 560795.3125 - mean_absolute_error: 90.4880 - mean_absolute_percentage_error: 20.2117 - mean_squared_error: 16035.9443 - root_mean_squared_error: 126.6331 - val_loss: nan - val_mean_absolute_error: nan - val_mean_absolute_percentage_error: nan - val_mean_squared_error: nan - val_root_mean_squared_error: nan - 181s/epoch - 1s/step
 Epoch 16/20
-100/100 - 181s - loss: 480494.7500 - mean_absolute_error: 82.2641 - mean_absolute_percentage_error: 10.9527 - mean_squared_error: 13728.4287 - root_mean_squared_error: 117.1684 - val_loss: 364667.8750 - val_mean_absolute_error: 72.2692 - val_mean_absolute_percentage_error: 9.3282 - val_mean_squared_error: 10439.5439 - val_root_mean_squared_error: 102.1741 - 181s/epoch - 2s/step
+143/143 - 181s - loss: 553269.9375 - mean_absolute_error: 90.1622 - mean_absolute_percentage_error: 20.6186 - mean_squared_error: 15812.8604 - root_mean_squared_error: 125.7492 - val_loss: nan - val_mean_absolute_error: nan - val_mean_absolute_percentage_error: nan - val_mean_squared_error: nan - val_root_mean_squared_error: nan - 181s/epoch - 1s/step
 Epoch 17/20
-100/100 - 181s - loss: 470863.4062 - mean_absolute_error: 81.8066 - mean_absolute_percentage_error: 11.1172 - mean_squared_error: 13453.2422 - root_mean_squared_error: 115.9881 - val_loss: 362616.3750 - val_mean_absolute_error: 72.0831 - val_mean_absolute_percentage_error: 9.3045 - val_mean_squared_error: 10381.2676 - val_root_mean_squared_error: 101.8885 - 181s/epoch - 2s/step
+143/143 - 181s - loss: 563576.5625 - mean_absolute_error: 90.8943 - mean_absolute_percentage_error: 20.6977 - mean_squared_error: 16117.6338 - root_mean_squared_error: 126.9552 - val_loss: nan - val_mean_absolute_error: nan - val_mean_absolute_percentage_error: nan - val_mean_squared_error: nan - val_root_mean_squared_error: nan - 181s/epoch - 1s/step
 Epoch 18/20
-100/100 - 181s - loss: 483382.9688 - mean_absolute_error: 82.7979 - mean_absolute_percentage_error: 11.0903 - mean_squared_error: 13810.9414 - root_mean_squared_error: 117.5200 - val_loss: 370660.1250 - val_mean_absolute_error: 72.8891 - val_mean_absolute_percentage_error: 9.4227 - val_mean_squared_error: 10610.1797 - val_root_mean_squared_error: 103.0057 - 181s/epoch - 2s/step
+143/143 - 181s - loss: 554069.9375 - mean_absolute_error: 89.5253 - mean_absolute_percentage_error: 19.9445 - mean_squared_error: 15843.4766 - root_mean_squared_error: 125.8709 - val_loss: nan - val_mean_absolute_error: nan - val_mean_absolute_percentage_error: nan - val_mean_squared_error: nan - val_root_mean_squared_error: nan - 181s/epoch - 1s/step
 Epoch 19/20
-100/100 - 182s - loss: 482627.0000 - mean_absolute_error: 82.3926 - mean_absolute_percentage_error: 11.1129 - mean_squared_error: 13789.3467 - root_mean_squared_error: 117.4280 - val_loss: 363310.8438 - val_mean_absolute_error: 72.1555 - val_mean_absolute_percentage_error: 9.3011 - val_mean_squared_error: 10400.8398 - val_root_mean_squared_error: 101.9845 - 182s/epoch - 2s/step
+143/143 - 181s - loss: 540467.1250 - mean_absolute_error: 88.1222 - mean_absolute_percentage_error: 19.3540 - mean_squared_error: 15458.0957 - root_mean_squared_error: 124.3306 - val_loss: nan - val_mean_absolute_error: nan - val_mean_absolute_percentage_error: nan - val_mean_squared_error: nan - val_root_mean_squared_error: nan - 181s/epoch - 1s/step
 Epoch 20/20
-100/100 - 175s - loss: 470565.8125 - mean_absolute_error: 81.0768 - mean_absolute_percentage_error: 10.6062 - mean_squared_error: 13444.7383 - root_mean_squared_error: 115.9514 - val_loss: 362330.1250 - val_mean_absolute_error: 72.0639 - val_mean_absolute_percentage_error: 9.2961 - val_mean_squared_error: 10372.7178 - val_root_mean_squared_error: 101.8465 - 175s/epoch - 2s/step
-Filename: /home/uwicore/Documentos/Redes-neuronales/ConvTraff_transfer_learning/utils.py
-
-Line #    Mem usage    Increment  Occurrences   Line Contents
-=============================================================
-   183    453.0 MiB    453.0 MiB           1   @profile
-   184                                         def compile_and_fit(model, train_set,train_labels,valid_set, valid_labels, initial_learning_rate, decay_steps, 
-   185                                                     decay_rate,gradient_clip,batch, max_epochs = 20):
-   186                                         
-   187    453.0 MiB      0.0 MiB           1       log_dir = "logs/fit/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
-   188    453.0 MiB      0.0 MiB           2       tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir, histogram_freq=1,
-   189    453.0 MiB      0.0 MiB           1           write_images=True, write_steps_per_second=True,embeddings_freq=1)
-   190                                         
-   191    453.0 MiB      0.0 MiB           1       csv_logger = keras.callbacks.CSVLogger('logs/ConvTraff_transfer_learning.csv',append =True)
-   192                                         
-   193    453.0 MiB      0.0 MiB           1       checkpoint_filepath = 'savedModel/ConvTraff_transfer_learning/model.{epoch:02d}.ckpt'
-   194    453.0 MiB      0.0 MiB           2       model_checkpoint_callback = tf.keras.callbacks.ModelCheckpoint(
-   195    453.0 MiB      0.0 MiB           1           filepath=checkpoint_filepath,
-   196    453.0 MiB      0.0 MiB           1           save_weights_only=False,
-   197    453.0 MiB      0.0 MiB           1           monitor='mean_absolute_percentage_error',
-   198    453.0 MiB      0.0 MiB           1           mode='auto',
-   199    453.0 MiB      0.0 MiB           1           save_freq='epoch',
-   200    453.0 MiB      0.0 MiB           1           save_best_only=False)
-   201                                         
-   202    453.0 MiB      0.0 MiB           2       learning_rate = tf.keras.optimizers.schedules.ExponentialDecay(
-   203    453.0 MiB      0.0 MiB           1           initial_learning_rate, decay_steps, decay_rate, staircase=True)
-   204                                         
-   205    453.9 MiB      0.6 MiB           2       model.compile(loss=l2loss,#¡tf.losses.MeanAbsoluteError(),
-   206    453.0 MiB      0.0 MiB           1                       optimizer= keras.optimizers.SGD(learning_rate,clipvalue = gradient_clip,momentum = 0.9),
-   207    453.3 MiB      0.2 MiB           2                       metrics=[tf.keras.metrics.MeanAbsoluteError(), 
-   208    453.3 MiB      0.0 MiB           1                       tf.keras.metrics.MeanAbsolutePercentageError(),
-   209    453.3 MiB      0.0 MiB           1                       tf.keras.metrics.MeanSquaredError(),
-   210    453.3 MiB      0.0 MiB           1                       tf.keras.metrics.RootMeanSquaredError()])
-   211                                         
-   212   1678.4 MiB   1224.6 MiB           2       history = model.fit(train_set,train_labels,validation_data = (valid_set, valid_labels), 
-   213    453.9 MiB      0.0 MiB           1           batch_size = batch, epochs= max_epochs,shuffle=True,verbose =2,
-   214    453.9 MiB      0.0 MiB           1           callbacks=[csv_logger])#,model_checkpoint_callback])#,callbacks=[tensorboard_callback]) #, callbacks=[model_checkpoint_callback]
-   215   1678.4 MiB      0.0 MiB           1       return history
-
-
-43/43 - 8s - loss: 260327.9375 - mean_absolute_error: 62.8443 - mean_absolute_percentage_error: 8.6951 - mean_squared_error: 7477.1860 - root_mean_squared_error: 86.4707 - 8s/epoch - 176ms/step
+143/143 - 181s - loss: 550486.5000 - mean_absolute_error: 89.1067 - mean_absolute_percentage_error: 19.6425 - mean_squared_error: 15740.5889 - root_mean_squared_error: 125.4615 - val_loss: nan - val_mean_absolute_error: nan - val_mean_absolute_percentage_error: nan - val_mean_squared_error: nan - val_root_mean_squared_error: nan - 181s/epoch - 1s/step
+43/43 - 8s - loss: 428370.0938 - mean_absolute_error: 73.7302 - mean_absolute_percentage_error: 15.0990 - mean_squared_error: 12397.9229 - root_mean_squared_error: 111.3460 - 8s/epoch - 189ms/step
 Model: "model"
 _________________________________________________________________
  Layer (type)                Output Shape              Param #   
@@ -136,4 +97,4 @@ Trainable params: 3,075,463
 Non-trainable params: 2,310
 _________________________________________________________________
 Evaluation in test_set:
-[260327.9375, 62.844303131103516, 8.695093154907227, 7477.18603515625, 86.4707260131836]
+[428370.09375, 73.73021697998047, 15.099040031433105, 12397.9228515625, 111.34596252441406]

@@ -1,7 +1,0 @@
-Loading dataset from dataset_12_1_1_1_7000_norm_3000.pickle...
-Training set (30000, 31, 12, 3) (30000, 31, 1, 3)
-Validation set (3000, 31, 12, 3) (3000, 31, 1, 3)
-Test set (3000, 31, 12, 3) (3000, 31, 1, 3)
-Building model...
-Epoch 1/20
-Backend GTK3Agg is interactive backend. Turning interactive mode on.

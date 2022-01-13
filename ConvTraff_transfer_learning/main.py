@@ -4,6 +4,8 @@ import tensorflow as tf
 from tensorflow.python.util.tf_export import ESTIMATOR_API_NAME
 import utils
 import model
+import csv
+
 
 parser = argparse.ArgumentParser(description='Trains a convolutional network for traffic prediction.')
 files_group = parser.add_argument_group('Data files')
@@ -78,7 +80,7 @@ backend.clear_session()
 #Cargar modelo
 conv_model = model.ConvTraff(args.forecast_window,args.time_window)
 
-conv_model.load_weights('savedModel/ConvTraff_transfer_learning_base/model.7000.ckpt')
+conv_model.load_weights('savedModel/ConvTraff_transfer_learning_base/model.'+ str(args.train_set_size) +'.ckpt')
 
 #Ver que hacemos con las capas
 history = utils.compile_and_fit(conv_model,train_set,train_labels, valid_set, valid_labels,
@@ -112,3 +114,9 @@ utils.plot_prediction(test_labels[150:200], pred[150:200],train_set.shape,valid_
 print('Evaluation in test_set:')
 print(eval)
 
+with open('datosGraf.csv', 'a') as f:
+    # create the csv writer
+    writer = csv.writer(f)
+
+    # write a row to the csv file
+    writer.writerow(['Transfer_learning',pred[150:200]])

@@ -3,6 +3,7 @@ import argparse
 import tensorflow as tf
 import utils
 import model
+import csv
 
 parser = argparse.ArgumentParser(description='Trains a convolutional network for traffic prediction.')
 files_group = parser.add_argument_group('Data files')
@@ -109,3 +110,10 @@ print('Evaluation in test_set:')
 print(eval)
 
 
+with open('datosGraf.csv', 'a') as f:
+    # create the csv writer
+    writer = csv.writer(f)
+
+    # write a row to the csv file
+    writer.writerow(['Datos',list(test_labels[150:200].flatten())])
+    writer.writerow(['ConvTraff',list(pred[150:200].flatten())] )

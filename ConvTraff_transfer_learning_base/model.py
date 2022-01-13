@@ -108,17 +108,18 @@ class Resnet(keras.layers.Layer):
         self.conv2 = layers.Conv2D(filters,[3,3],strides=[1,1],padding="same")
         self.batch_norm2 = layers.BatchNormalization()
         self.sum = layers.Add()
-        self.relu = layers.ReLU()
+        self.relu1 = layers.ReLU()
+        self.relu2 = layers.ReLU()
 
     def call(self, inputs):
         
         a = self.conv(inputs)
         b = self.batch_norm(a)
-        b = tf.nn.relu(b)   #NuevaAdicion       
+        b = self.relu1(b)
         c = self.conv2(b)
         d = self.batch_norm2(c)
         e = self.sum([d,inputs])
-        f = self.relu(e)
+        f = self.relu2(e)
         return f
 
     def get_config(self):
@@ -129,7 +130,8 @@ class Resnet(keras.layers.Layer):
                        "conv2": self.conv2,
                        "batch_norm2": self.batch_norm2,
                        "sum": self.sum,
-                       "relu": self.relu,
+                       "relu1": self.relu1,
+                       "relu2": self.relu2,
                        })
 
 

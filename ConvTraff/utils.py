@@ -179,7 +179,7 @@ class traff_var(IntEnum):
 def l2loss(y_true, y_pred):
     return tf.nn.l2_loss(y_pred - y_true)
 
-@profile
+
 def compile_and_fit(model, train_set,train_labels,valid_set, valid_labels, initial_learning_rate, decay_steps, 
             decay_rate,gradient_clip,batch, max_epochs = 20):
 

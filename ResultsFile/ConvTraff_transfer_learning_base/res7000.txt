@@ -1,0 +1,104 @@
+Generating training, validation and test sets...
+	Parsing /home/uwicore/Documentos/pems-traffic-prediction-datasets/I5-S-3/2015.csv
+	Parsing /home/uwicore/Documentos/pems-traffic-prediction-datasets/I5-S-3/2016.csv
+	Parsing /home/uwicore/Documentos/pems-traffic-prediction-datasets/I5-S-3/2016.csv
+Saving dataset into dataset_12_1_1_1_10000_tl_3000.pickle...
+Training set (10000, 25, 12, 3) (10000, 25, 1, 3)
+Validation set (3000, 25, 12, 3) (3000, 25, 1, 3)
+Test set (3000, 25, 12, 3) (3000, 25, 1, 3)
+Building model...
+Epoch 1/20
+143/143 - 237s - loss: 8264038.0000 - mean_absolute_error: 387.9111 - mean_absolute_percentage_error: 45.2309 - mean_squared_error: 236249.0312 - root_mean_squared_error: 486.0546 - val_loss: 143866672.0000 - val_mean_absolute_error: 1360.8129 - val_mean_absolute_percentage_error: 334.2058 - val_mean_squared_error: 4122523.7500 - val_root_mean_squared_error: 2030.3999 - 237s/epoch - 2s/step
+Epoch 2/20
+143/143 - 231s - loss: 5620939.0000 - mean_absolute_error: 330.0894 - mean_absolute_percentage_error: 38.2935 - mean_squared_error: 160626.0938 - root_mean_squared_error: 400.7819 - val_loss: 18188082.0000 - val_mean_absolute_error: 679.1913 - val_mean_absolute_percentage_error: 75.4196 - val_mean_squared_error: 520931.1562 - val_root_mean_squared_error: 721.7556 - 231s/epoch - 2s/step
+Epoch 3/20
+143/143 - 217s - loss: 3574745.5000 - mean_absolute_error: 263.0332 - mean_absolute_percentage_error: 32.1734 - mean_squared_error: 102215.6250 - root_mean_squared_error: 319.7118 - val_loss: 9653049.0000 - val_mean_absolute_error: 465.4238 - val_mean_absolute_percentage_error: 35.2136 - val_mean_squared_error: 276507.2188 - val_root_mean_squared_error: 525.8395 - 217s/epoch - 2s/step
+Epoch 4/20
+143/143 - 247s - loss: 5133589.0000 - mean_absolute_error: 300.5968 - mean_absolute_percentage_error: 35.0489 - mean_squared_error: 146788.6406 - root_mean_squared_error: 383.1301 - val_loss: 6998572.5000 - val_mean_absolute_error: 358.1728 - val_mean_absolute_percentage_error: 50.5265 - val_mean_squared_error: 200464.4062 - val_root_mean_squared_error: 447.7325 - 247s/epoch - 2s/step
+Epoch 5/20
+143/143 - 238s - loss: 2542018.7500 - mean_absolute_error: 211.1443 - mean_absolute_percentage_error: 24.7901 - mean_squared_error: 72839.7734 - root_mean_squared_error: 269.8885 - val_loss: 2261756.0000 - val_mean_absolute_error: 197.2602 - val_mean_absolute_percentage_error: 37.3497 - val_mean_squared_error: 64803.3594 - val_root_mean_squared_error: 254.5650 - 238s/epoch - 2s/step
+Epoch 6/20
+143/143 - 234s - loss: 4079246.5000 - mean_absolute_error: 271.9724 - mean_absolute_percentage_error: 27.5601 - mean_squared_error: 116964.2734 - root_mean_squared_error: 342.0004 - val_loss: 6683840.0000 - val_mean_absolute_error: 387.5716 - val_mean_absolute_percentage_error: 38.6377 - val_mean_squared_error: 191527.2031 - val_root_mean_squared_error: 437.6382 - 234s/epoch - 2s/step
+Epoch 7/20
+143/143 - 233s - loss: 4904632.5000 - mean_absolute_error: 297.9969 - mean_absolute_percentage_error: 27.9028 - mean_squared_error: 140230.9531 - root_mean_squared_error: 374.4742 - val_loss: 45568400.0000 - val_mean_absolute_error: 771.8011 - val_mean_absolute_percentage_error: 68.7579 - val_mean_squared_error: 1304153.0000 - val_root_mean_squared_error: 1141.9952 - 233s/epoch - 2s/step
+Epoch 8/20
+143/143 - 215s - loss: 3832202.7500 - mean_absolute_error: 202.6556 - mean_absolute_percentage_error: 19.5777 - mean_squared_error: 109519.1172 - root_mean_squared_error: 330.9367 - val_loss: 489327.0625 - val_mean_absolute_error: 85.5961 - val_mean_absolute_percentage_error: 9.3287 - val_mean_squared_error: 14010.6055 - val_root_mean_squared_error: 118.3664 - 215s/epoch - 2s/step
+Epoch 9/20
+143/143 - 234s - loss: 815262.0625 - mean_absolute_error: 117.2732 - mean_absolute_percentage_error: 12.0128 - mean_squared_error: 23303.1113 - root_mean_squared_error: 152.6536 - val_loss: 703521.0000 - val_mean_absolute_error: 105.5190 - val_mean_absolute_percentage_error: 10.6309 - val_mean_squared_error: 20154.0098 - val_root_mean_squared_error: 141.9648 - 234s/epoch - 2s/step
+Epoch 10/20
+143/143 - 234s - loss: 769940.6875 - mean_absolute_error: 112.9792 - mean_absolute_percentage_error: 11.6569 - mean_squared_error: 22010.4902 - root_mean_squared_error: 148.3593 - val_loss: 534223.8125 - val_mean_absolute_error: 90.0468 - val_mean_absolute_percentage_error: 9.3212 - val_mean_squared_error: 15303.8730 - val_root_mean_squared_error: 123.7088 - 234s/epoch - 2s/step
+Epoch 11/20
+143/143 - 244s - loss: 672980.0000 - mean_absolute_error: 105.5250 - mean_absolute_percentage_error: 10.7898 - mean_squared_error: 19238.7305 - root_mean_squared_error: 138.7038 - val_loss: 720637.8750 - val_mean_absolute_error: 105.6592 - val_mean_absolute_percentage_error: 10.9194 - val_mean_squared_error: 20642.5664 - val_root_mean_squared_error: 143.6752 - 244s/epoch - 2s/step
+Epoch 12/20
+143/143 - 240s - loss: 665995.8125 - mean_absolute_error: 106.1899 - mean_absolute_percentage_error: 10.9398 - mean_squared_error: 19046.5098 - root_mean_squared_error: 138.0091 - val_loss: 660684.9375 - val_mean_absolute_error: 106.4045 - val_mean_absolute_percentage_error: 9.6972 - val_mean_squared_error: 18915.9609 - val_root_mean_squared_error: 137.5353 - 240s/epoch - 2s/step
+Epoch 13/20
+143/143 - 210s - loss: 670851.5000 - mean_absolute_error: 104.4715 - mean_absolute_percentage_error: 10.3679 - mean_squared_error: 19184.1426 - root_mean_squared_error: 138.5068 - val_loss: 400216.4062 - val_mean_absolute_error: 76.2661 - val_mean_absolute_percentage_error: 7.8601 - val_mean_squared_error: 11462.8018 - val_root_mean_squared_error: 107.0645 - 210s/epoch - 1s/step
+Epoch 14/20
+143/143 - 234s - loss: 572002.5000 - mean_absolute_error: 97.3142 - mean_absolute_percentage_error: 10.0365 - mean_squared_error: 16362.8418 - root_mean_squared_error: 127.9173 - val_loss: 513385.4375 - val_mean_absolute_error: 87.8568 - val_mean_absolute_percentage_error: 8.8199 - val_mean_squared_error: 14704.8574 - val_root_mean_squared_error: 121.2636 - 234s/epoch - 2s/step
+Epoch 15/20
+143/143 - 235s - loss: 501103.8750 - mean_absolute_error: 90.7617 - mean_absolute_percentage_error: 9.5343 - mean_squared_error: 14329.5010 - root_mean_squared_error: 119.7059 - val_loss: 411139.4688 - val_mean_absolute_error: 77.3603 - val_mean_absolute_percentage_error: 7.8251 - val_mean_squared_error: 11774.9131 - val_root_mean_squared_error: 108.5123 - 235s/epoch - 2s/step
+Epoch 16/20
+143/143 - 208s - loss: 486401.4375 - mean_absolute_error: 88.9061 - mean_absolute_percentage_error: 9.2092 - mean_squared_error: 13907.4756 - root_mean_squared_error: 117.9300 - val_loss: 378919.9688 - val_mean_absolute_error: 75.0307 - val_mean_absolute_percentage_error: 7.5296 - val_mean_squared_error: 10850.4062 - val_root_mean_squared_error: 104.1653 - 208s/epoch - 1s/step
+Epoch 17/20
+143/143 - 209s - loss: 488411.0938 - mean_absolute_error: 88.9584 - mean_absolute_percentage_error: 8.9814 - mean_squared_error: 13966.8701 - root_mean_squared_error: 118.1815 - val_loss: 386809.5625 - val_mean_absolute_error: 75.3817 - val_mean_absolute_percentage_error: 7.6280 - val_mean_squared_error: 11078.1377 - val_root_mean_squared_error: 105.2527 - 209s/epoch - 1s/step
+Epoch 18/20
+143/143 - 208s - loss: 472830.3125 - mean_absolute_error: 87.5152 - mean_absolute_percentage_error: 9.0939 - mean_squared_error: 13522.2988 - root_mean_squared_error: 116.2854 - val_loss: 374661.0312 - val_mean_absolute_error: 74.2662 - val_mean_absolute_percentage_error: 7.5127 - val_mean_squared_error: 10729.2695 - val_root_mean_squared_error: 103.5822 - 208s/epoch - 1s/step
+Epoch 19/20
+143/143 - 205s - loss: 458413.8125 - mean_absolute_error: 85.6875 - mean_absolute_percentage_error: 8.7077 - mean_squared_error: 13112.1748 - root_mean_squared_error: 114.5084 - val_loss: 384005.5938 - val_mean_absolute_error: 75.7326 - val_mean_absolute_percentage_error: 7.6555 - val_mean_squared_error: 10996.3936 - val_root_mean_squared_error: 104.8637 - 205s/epoch - 1s/step
+Epoch 20/20
+143/143 - 205s - loss: 468980.2188 - mean_absolute_error: 86.8416 - mean_absolute_percentage_error: 8.8843 - mean_squared_error: 13408.8740 - root_mean_squared_error: 115.7967 - val_loss: 400868.2188 - val_mean_absolute_error: 76.3875 - val_mean_absolute_percentage_error: 7.7120 - val_mean_squared_error: 11480.9932 - val_root_mean_squared_error: 107.1494 - 205s/epoch - 1s/step
+43/43 - 9s - loss: 377577.2500 - mean_absolute_error: 76.7060 - mean_absolute_percentage_error: 8.4854 - mean_squared_error: 10862.0176 - root_mean_squared_error: 104.2210 - 9s/epoch - 204ms/step
+Model: "model"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ input_2 (InputLayer)        [(None, None, 12, 3)]     0         
+                                                                 
+ batch_normalization (BatchN  (None, None, 12, 3)      12        
+ ormalization)                                                   
+                                                                 
+ zero_padding2d (ZeroPadding  (None, None, 12, 32)     0         
+ 2D)                                                             
+                                                                 
+ resnet (Resnet)             (None, None, 12, 32)      18752     
+                                                                 
+ resnet_1 (Resnet)           (None, None, 12, 32)      18752     
+                                                                 
+ resnet_2 (Resnet)           (None, None, 12, 32)      18752     
+                                                                 
+ zero_padding2d_1 (ZeroPaddi  (None, None, 12, 64)     0         
+ ng2D)                                                           
+                                                                 
+ resnet_3 (Resnet)           (None, None, 12, 64)      74368     
+                                                                 
+ resnet_4 (Resnet)           (None, None, 12, 64)      74368     
+                                                                 
+ resnet_5 (Resnet)           (None, None, 12, 64)      74368     
+                                                                 
+ zero_padding2d_2 (ZeroPaddi  (None, None, 12, 96)     0         
+ ng2D)                                                           
+                                                                 
+ resnet_6 (Resnet)           (None, None, 12, 96)      166848    
+                                                                 
+ resnet_7 (Resnet)           (None, None, 12, 96)      166848    
+                                                                 
+ resnet_8 (Resnet)           (None, None, 12, 96)      166848    
+                                                                 
+ global_average_pooling2d (G  (None, 96)               0         
+ lobalAveragePooling2D)                                          
+                                                                 
+ dense (Dense)               (None, 2048)              198656    
+                                                                 
+ dropout (Dropout)           (None, 2048)              0         
+                                                                 
+ dense_1 (Dense)             (None, 1024)              2098176   
+                                                                 
+ dense_2 (Dense)             (None, 1)                 1025      
+                                                                 
+=================================================================
+Total params: 3,077,773
+Trainable params: 3,075,463
+Non-trainable params: 2,310
+_________________________________________________________________
+Evaluation in test_set:
+[377577.25, 76.70597076416016, 8.485411643981934, 10862.017578125, 104.22100067138672]
