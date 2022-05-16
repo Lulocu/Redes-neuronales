@@ -82,7 +82,8 @@ history = utils.compile_and_fit(conv_model,train_set,train_labels, valid_set, va
             batch=args.batch_size)
 
 eval = conv_model.evaluate(x=test_set, y = test_labels,batch_size=args.batch_size, verbose =2)
-pred   = conv_model.predict(test_set)
+pred1   = conv_model.predict(test_set[112:113])
+pred2   = conv_model.predict(test_set[0:113])
 
 
 conv_model.build_graph(args.time_window).summary()
@@ -110,3 +111,7 @@ with open('datosGraf.csv', 'a') as f:
 
     # write a row to the csv file
     writer.writerow(['Normal_layers',pred[150:200]])
+
+    #72730390.0
+    #72730390.0
+    #72730390.0

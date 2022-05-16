@@ -90,7 +90,7 @@ history = utils.compile_and_fit(conv_model,train_set,train_labels, valid_set, va
 
 eval = conv_model.evaluate(x=test_set, y = test_labels,batch_size=args.batch_size, verbose =2)
 
-pred   = conv_model.predict(test_set)
+pred   = conv_model.predict(test_set[0:1])
 
 
 conv_model.build_graph(args.time_window).summary()

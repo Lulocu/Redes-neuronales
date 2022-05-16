@@ -184,13 +184,13 @@ def l2loss(y_true, y_pred):
 def compile_and_fit(model, train_set,train_labels,valid_set, valid_labels, initial_learning_rate, decay_steps, 
             decay_rate,gradient_clip,batch, max_epochs = 20):
 
-    #log_dir = "logs/fit/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
-    #tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir, histogram_freq=1,
-    #    write_images=True, write_steps_per_second=True,embeddings_freq=1)
+    log_dir = "logs/fit/ConvTraff_depth_layers/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+    tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir, histogram_freq=1,
+        write_images=True, write_steps_per_second=True,embeddings_freq=1)
 
     csv_logger = keras.callbacks.CSVLogger('logs/ConvTraff_depth_layers.csv',append =True)
 
-    checkpoint_filepath = 'savedModel/'
+    checkpoint_filepath = 'savedModel/ConvTraff_depth_layers/'
     model_checkpoint_callback = tf.keras.callbacks.ModelCheckpoint(
         filepath=checkpoint_filepath,
         save_weights_only=False,
@@ -211,7 +211,7 @@ def compile_and_fit(model, train_set,train_labels,valid_set, valid_labels, initi
 
     history = model.fit(train_set,train_labels,validation_data = (valid_set, valid_labels), 
         batch_size = batch, epochs= max_epochs,shuffle=True,verbose =2,
-        callbacks=[csv_logger])#,callbacks=[tensorboard_callback]) #, callbacks=[model_checkpoint_callback]
+        callbacks=[csv_logger])#,tensorboard_callback,model_checkpoint_callback])#,callbacks=[tensorboard_callback]) #, callbacks=[model_checkpoint_callback]
     return history
 
 def plot_history(history):
